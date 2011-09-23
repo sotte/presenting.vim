@@ -27,7 +27,7 @@ function! s:Start()
     endif
     let g:presen_vim_using = 1
 
-    tabe
+    tabe _Slide_
     setl readonly
     call s:ShowPage(0)
 
@@ -73,8 +73,10 @@ function! s:PrevPage()
 endfunction
 
 function! s:Exit()
-    let g:presen_vim_using = 0
-    bdelete!
+       if g:presen_vim_using == 1
+           let g:presen_vim_using = 0
+           bdelete! _Slide_
+       endif
 endfunction
 
 
