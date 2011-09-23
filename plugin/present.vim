@@ -31,7 +31,7 @@ function! s:Start()
     setl readonly
     call s:ShowPage(0)
 
-    setf markdown
+    setf rst
 
     command! -buffer PageNext call s:NextPage()
     command! -buffer PagePrev call s:PrevPage()
