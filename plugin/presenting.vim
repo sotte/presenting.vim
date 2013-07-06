@@ -1,4 +1,4 @@
-" present.vim - presentation for vim
+" presenting.vim - presentation for vim
 
 if !exists('g:presenting_vim_using')
     let g:presenting_vim_using = 0
@@ -74,7 +74,7 @@ function! s:ShowPage(page_no)
     " replace content of buffer with the next page
     setlocal noreadonly
     setlocal modifiable
-    execute ":normal G$vggd"
+    execute ":normal! G$vggd"
     call append(0, s:pages[s:page_number])
 
     " some options for the buffer
@@ -85,7 +85,7 @@ function! s:ShowPage(page_no)
     setlocal cmdheight=1
     setlocal statusline=%<
     " move cursor to the top
-    execute ":normal gg"
+    execute ":normal! gg"
 endfunction
 
 function! s:NextPage()
