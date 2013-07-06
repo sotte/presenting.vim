@@ -13,7 +13,6 @@ if !exists('g:presenting_slide_separators')
           \ }
 endif
 
-
 " Main logic / start the presentation {{{
 command! StartPresenting call s:Start()
 function! s:Start()
@@ -84,8 +83,11 @@ function! s:ShowPage(page_no)
     setlocal nomodifiable
     setlocal nonumber
     setlocal norelativenumber
+    setlocal nocursorcolumn
+    setlocal nocursorline
     setlocal cmdheight=1
     setlocal statusline=%<
+
     " move cursor to the top
     execute ":normal! gg"
 endfunction
