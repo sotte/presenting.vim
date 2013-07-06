@@ -15,7 +15,7 @@ endif
 
 
 " Main logic / start the presentation {{{
-command! StartPresent call s:Start()
+command! StartPresenting call s:Start()
 function! s:Start()
 
     if g:presenting_vim_using == 1
