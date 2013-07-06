@@ -4,27 +4,27 @@ A simple tool for presenting slides in vim based on text files.
 TODO awesome logo
 
 ==============================================================================
-CONTENTS *presenting-contents*
+CONTENTS                                                 *presenting-contents*
 
-  Introduction................|presenting-introduction|
-  Usage.......................|presenting-usage|
-  Mappings....................|presenting-mappings|
-  Configuration...............|presenting-configuration|
-  Code........................|presenting-code|
-  License.....................|presenting-license|
+  1. Introduction..........................|presenting-introduction|
+  2. Usage.................................|presenting-usage|
+  3. Mappings..............................|presenting-mappings|
+  4. Configuration.........................|presenting-configuration|
+  5. Code..................................|presenting-code|
+  6. License...............................|presenting-license|
 
 ==============================================================================
-INTRODUCTION *presenting-introduction*
+INTRODUCTION                                         *presenting-introduction*
 
 presenting.vim is a simple tool for presenting slides in vim based on text files.
-It is a clone of 
-which is a clone of
+It is a clone of https://github.com/pct/present.vim
+which is a clone of https://github.com/sorah/presen.vim
 
-presenting.vim has support for a number of markup languages, can be extended,
-and is documented. Great, hey?
+In contrast to its predecessors presenting.vim has support for a number of
+markup languages, can be extended, and is documented. Great, hey?
 
 ==============================================================================
-USAGE *presenting-usage*
+USAGE                                                       *presenting-usage*
 
 You write you presentation in your favorite markup language.
 Every slide is separated by a markup language specific marker:
@@ -49,7 +49,7 @@ Also, take a look at the presenting.vim examples:
  * PresentingExample.org
 
 ==============================================================================
-MAPPINGS *presenting-mappings*
+MAPPINGS                                                 *presenting-mappings*
 
 In the presentation mode there are the following mapping:
 
@@ -58,9 +58,9 @@ In the presentation mode there are the following mapping:
   p - previous slide
 
 ==============================================================================
-CONFIGURATION *presenting-configuration*
+CONFIGURATION                                       *presenting-configuration*
 
-                                                 |presenting_slide_separators|
+                                                 *presenting_slide_separators*
 This option defines the 'filetype-->slide separator' mapping and allows you
 to edit the curernt ones and add new ones.
 List the existing ones: >
@@ -72,19 +72,19 @@ Add your own/customize the current ones: >
 where '----' is the separator.
 
 ==============================================================================
-CODE *presenting-code*
+CODE                                                         *presenting-code*
 
 Having issues? *presenting-issues*
- * goto TODO
+ * goto https://github.com/sotte/presenting.vim/issues
  * or, better, goto |presenting-contribute|
  * 
 Wanna contribute? *presenting-contribute*
- * TODO
+ * https://github.com/sotte/presenting.vim
 
 presenting.vim only uses vim-script.
 
 ==============================================================================
-LICENSE *presenting-license*
+LICENSE                                                   *presenting-license*
 
 presenting.vim is under the BEER-WARE LICENSE.
 
