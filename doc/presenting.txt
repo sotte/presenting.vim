@@ -1,0 +1,98 @@
+*presenting.vim* *presenting.vim.txt* *presenting.txt* *presenting*
+A simple tool for presenting slides in vim based on text files.
+
+TODO awesome logo
+
+==============================================================================
+CONTENTS *presenting-contents*
+
+  Introduction................|presenting-introduction|
+  Usage.......................|presenting-usage|
+  Mappings....................|presenting-mappings|
+  Configuration...............|presenting-configuration|
+  Code........................|presenting-code|
+  License.....................|presenting-license|
+
+==============================================================================
+INTRODUCTION *presenting-introduction*
+
+presenting.vim is a simple tool for presenting slides in vim based on text files.
+It is a clone of 
+which is a clone of
+
+presenting.vim has support for a number of markup languages, can be extended,
+and is documented. Great, hey?
+
+==============================================================================
+USAGE *presenting-usage*
+
+You write you presentation in your favorite markup language.
+Every slide is separated by a markup language specific marker:
+>
+ FILETYPE       |  SLIDE SEPARATOR
+ ---------------+-----------------
+ markdown       |  XXX
+ rst            |  ~~~~
+ orgmode        |  #----
+<
+
+When you want to start presenting execute: >
+  :StartPresenting
+<
+
+You can navigate to the next slide (n), the previous slide (p) or quit (q)
+the presentation.
+
+Also, take a look at the presenting.vim examples:
+ * PresentingExample.markdown
+ * PresentingExample.rst
+ * PresentingExample.org
+
+==============================================================================
+MAPPINGS *presenting-mappings*
+
+In the presentation mode there are the following mapping:
+
+  q - quit presentation
+  n - next slide
+  p - previous slide
+
+==============================================================================
+CONFIGURATION *presenting-configuration*
+
+                                                 |presenting_slide_separators|
+This option defines the 'filetype-->slide separator' mapping and allows you
+to edit the curernt ones and add new ones.
+List the existing ones: >
+  :echo g:presenting_slide_separators
+<
+Add your own/customize the current ones: >
+  :let g:presenting_slide_separators['my_filetype']='----'
+<
+where '----' is the separator.
+
+==============================================================================
+CODE *presenting-code*
+
+Having issues? *presenting-issues*
+ * goto TODO
+ * or, better, goto |presenting-contribute|
+ * 
+Wanna contribute? *presenting-contribute*
+ * TODO
+
+presenting.vim only uses vim-script.
+
+==============================================================================
+LICENSE *presenting-license*
+
+presenting.vim is under the BEER-WARE LICENSE.
+
+THE BEER-WARE LICENSE
+
+"As long as you retain this notice you can do whatever you want with this
+stuff. If we meet some day, and you think this stuff is worth it, you can buy
+me a beer in return."
+
+==============================================================================
+vim:tw=78:ts=2:sw=2:expandtab:ft=help:norl:
