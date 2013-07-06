@@ -1,5 +1,4 @@
-presenting.vim
-============================================================
+# presenting.vim
 
 presenting.vim is a simple tool for presenting slides in vim
 based on text files.
@@ -14,20 +13,16 @@ In contrast to its predecessors presenting.vim
 
 Great, hey?
 
-~~~~
 
-Installation
-============================================================
+# Installation
 
 Use pathogen_ or vundle_ to install presenting.vim.
 
-.. _pathogen: https://github.com/tpope/vim-pathogen
-.. _vundle: https://github.com/gmarik/vundle
+ * https://github.com/tpope/vim-pathogen
+ * https://github.com/gmarik/vundle
 
-~~~~
 
-Usage 1/2
-============================================================
+# Usage 1/2
 
 * write you presentation in your favorite markup language
 * every slide is separated by a markup language specific marker
@@ -40,14 +35,12 @@ rst       ~~~~
 orgmode   #----
 ========  ===============
 
-~~~~
+# Usage 2/2
 
-Usage 2/2
-============================================================
-
-When you want to start presenting execute::
-
+When you want to start presenting execute:
+```
     :StartPresenting
+```
 
 Navigation:
  * n - next slide
@@ -61,10 +54,7 @@ Also, take a look at the presenting.vim examples:
 
 Of course you can configure the slide separators.
 
-~~~~
-
-Links
-============================================================
+# Links
 
 The code is on github. Pull requests are welcome!
  * https://github.com/sotte/presenting.vim
