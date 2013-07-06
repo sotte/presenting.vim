@@ -4,6 +4,16 @@ if !exists('g:presenting_vim_using')
     let g:presenting_vim_using = 0
 endif
 
+if !exists('g:presenting_slide_separators')
+    " the separators define the new page transition for diffrent filetypes
+    let g:presenting_slide_separators = {
+          \ 'markdown': '\v(^|\n)\ze#+',
+          \ 'org': '\v(^|\n)#-{4,}',
+          \ 'rst': '\v(^|\n)\~{4,}',
+          \ }
+endif
+
+
 " Main logic / start the presentation {{{
 command! StartPresent call s:Start()
 function! s:Start()
@@ -18,16 +28,8 @@ function! s:Start()
     let s:pages = []
     let s:filetype = &filetype
 
-    " the separators define the new page transition for diffrent filetypes
-    let s:separators = {
-          \ 'markdown': '\v(^|\n)\ze#+',
-          \ 'org': '\v(^|\n)#-{4,}',
-          \ 'rst': '\v(^|\n)\~{4,}',
-          \ }
-
     " make sure we can parse the filetype"
-    echo s:separators.rst
-    if has_key(s:separators, s:filetype)
+    if has_key(g:presenting_slide_separators, s:filetype)
       " echom "Separator for ft exists"
     elseif
       echom "Filetype not supported by presenting.vim."
@@ -112,7 +114,7 @@ endfunction
 " Parsing {{{
 function! s:Parse()
     " filetype specific separator
-    let sep = get(s:separators, s:filetype)
+    let sep = get(g:presenting_slide_separators, s:filetype)
     let s:pages =  map(split(join(getline(1, '$'), "\n"), sep), 'split(v:val, "\n")')
     let s:max_page_number = len(s:pages) - 1
 endfunction
