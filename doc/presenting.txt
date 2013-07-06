@@ -1,7 +1,15 @@
 *presenting.vim* *presenting.vim.txt* *presenting.txt* *presenting*
 A simple tool for presenting slides in vim based on text files.
 
-TODO awesome logo
+                                   o                     o             
+   _   ,_    _   ,   _   _  _  _|_     _  _    __,           _  _  _   
+ |/ \_/  |  |/  / \_|/  / |/ |  |  |  / |/ |  /  |  |  |_|  / |/ |/ |  
+ |__/    |_/|__/ \/ |__/  |  |_/|_/|_/  |  |_/\_/|/o \/  |_/  |  |  |_/
+/|                                              /|                     
+\|                                              \|                     
+
+
+Version: 0.1.0
 
 ==============================================================================
 CONTENTS                                                 *presenting-contents*
@@ -95,4 +103,4 @@ stuff. If we meet some day, and you think this stuff is worth it, you can buy
 me a beer in return."
 
 ==============================================================================
-vim:tw=78:ts=2:sw=2:expandtab:ft=help:norl:
+vim:tw=78:ts=2:sw=2:expandtab:ft=help:norl:cole=0
