@@ -27,13 +27,13 @@ Use pathogen_ or vundle_ to install presenting.vim.
 * write you presentation in your favorite markup language
 * every slide is separated by a markup language specific marker
 
-  ========  ===============
-  FILETYPE  SLIDE SEPARATOR
-  ========  ===============
-  markdown  XXX
-  rst       ~~~~
-  orgmode   #----
-  ========  ===============
+    ========  ===============
+    FILETYPE  SLIDE SEPARATOR
+    ========  ===============
+    markdown  XXX
+    rst       ~~~~
+    orgmode   #----
+    ========  ===============
 
 # Usage 2/2
 
