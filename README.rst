@@ -1,29 +1,78 @@
-Present.vim
-===========
+============================================================
+presenting.vim
+============================================================
 
-**present.vim** is a presentation tool for Vim.
+presenting.vim is a simple tool for presenting slides in vim
+based on text files.
 
-It's clone from https://github.com/sorah/presen.vim but use reStructuredText syntax instead.
+It is a clone of https://github.com/pct/present.vim
+which is a clone of https://github.com/sorah/presen.vim
 
-~~~~
+In contrast to its predecessors presenting.vim
+ * has support for a number of markup languages,
+ * can be extended, and
+ * is documented
 
-How to Use
-==========
-
-1. Open a rst file (ex: this file)
-2. Run::
-   
-    :StartPresent
-
-3. Use *n* to next page, *p* to previous page, and *q* to exit presentation
-4. Seperate screen/page by 4 '~' 
+Great, hey?
 
 ~~~~
 
-Convert to HTML
-===============
+============================================================
+Installation
+============================================================
 
-1. Install VST (https://github.com/vim-scripts/VST)
-2. Run::
-   
-    :VSTi html
+Use pathogen_ or vundle_ to install presenting.vim.
+
+.. _pathogen: https://github.com/tpope/vim-pathogen
+.. _vundle: https://github.com/gmarik/vundle
+
+~~~~
+
+============================================================
+Usage 1/2
+============================================================
+
+* write you presentation in your favorite markup language
+* every slide is separated by a markup language specific marker
+
+========  ===============
+FILETYPE  SLIDE SEPARATOR
+========  ===============
+markdown  XXX
+rst       ~~~~
+orgmode   #----
+========  ===============
+
+~~~~
+
+============================================================
+Usage 2/2
+============================================================
+
+When you want to start presenting execute::
+
+    :StartPresenting
+
+Navigation:
+ * n - next slide
+ * p - previous slide
+ * q - quit
+
+Also, take a look at the presenting.vim examples:
+ * PresentingExample.markdown
+ * PresentingExample.rst
+ * PresentingExample.org
+
+Of course you can configure the slide separators.
+
+~~~~
+
+============================================================
+Links
+============================================================
+
+The code is on github. Pull requests are welcome!
+ * https://github.com/sotte/presenting.vim
+
+Issue tracker:
+ * https://github.com/sotte/presenting.vim/issues
