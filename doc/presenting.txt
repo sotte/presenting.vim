@@ -1,12 +1,12 @@
 *presenting.vim* *presenting.vim.txt* *presenting.txt* *presenting*
-A simple tool for presenting slides in vim based on text files.
+A simple tool for presenting slides in Vim based on text files.
 
-                                   o                     o             
-   _   ,_    _   ,   _   _  _  _|_     _  _    __,           _  _  _   
- |/ \_/  |  |/  / \_|/  / |/ |  |  |  / |/ |  /  |  |  |_|  / |/ |/ |  
+                                   o                     o
+   _   ,_    _   ,   _   _  _  _|_     _  _    __,           _  _  _
+ |/ \_/  |  |/  / \_|/  / |/ |  |  |  / |/ |  /  |  |  |_|  / |/ |/ |
  |__/    |_/|__/ \/ |__/  |  |_/|_/|_/  |  |_/\_/|/o \/  |_/  |  |  |_/
-/|                                              /|                     
-\|                                              \|                     
+/|                                              /|
+\|                                              \|
 
 
 Version: 0.1.0
@@ -24,7 +24,7 @@ CONTENTS                                                 *presenting-contents*
 ==============================================================================
 INTRODUCTION                                         *presenting-introduction*
 
-presenting.vim is a simple tool for presenting slides in vim based on text files.
+presenting.vim is a simple tool for presenting slides in Vim based on text files.
 It is a clone of https://github.com/pct/present.vim
 which is a clone of https://github.com/sorah/presen.vim
 
@@ -70,7 +70,7 @@ CONFIGURATION                                       *presenting-configuration*
 
                                                  *presenting_slide_separators*
 This option defines the 'filetype-->slide separator' mapping and allows you
-to edit the curernt ones and add new ones.
+to edit the current ones and add new ones.
 List the existing ones: >
   :echo g:presenting_slide_separators
 <
@@ -85,7 +85,7 @@ CODE                                                         *presenting-code*
 Having issues? *presenting-issues*
  * goto https://github.com/sotte/presenting.vim/issues
  * or, better, goto |presenting-contribute|
- * 
+ *
 Wanna contribute? *presenting-contribute*
  * https://github.com/sotte/presenting.vim
 
