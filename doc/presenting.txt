@@ -39,7 +39,7 @@ Every slide is separated by a markup language specific marker:
 >
  FILETYPE       |  SLIDE SEPARATOR
  ---------------+-----------------
- markdown       |  XXX
+ markdown       |  # heading
  rst            |  ~~~~
  orgmode        |  #----
 <
@@ -85,7 +85,7 @@ CODE                                                         *presenting-code*
 Having issues? *presenting-issues*
  * goto https://github.com/sotte/presenting.vim/issues
  * or, better, goto |presenting-contribute|
- *
+
 Wanna contribute? *presenting-contribute*
  * https://github.com/sotte/presenting.vim
 
