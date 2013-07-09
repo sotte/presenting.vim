@@ -31,7 +31,7 @@ Use pathogen_ or vundle_ to install presenting.vim.
     ========  ===============
     FILETYPE  SLIDE SEPARATOR
     ========  ===============
-    markdown  XXX
+    markdown  # heading
     rst       ~~~~
     orgmode   #----
     ========  ===============
