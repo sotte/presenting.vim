@@ -81,6 +81,8 @@ function! s:ShowPage(page_no)
     " some options for the buffer
     setlocal readonly
     setlocal nomodifiable
+    setlocal buftype=nofile
+    setlocal noswapfile
     setlocal nonumber
     setlocal norelativenumber
     setlocal nocursorcolumn
