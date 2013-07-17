@@ -12,6 +12,7 @@
 Each heading is a separate slide!
 
 Start presenting:
+
 ```
   :StartPresenting
 ```
@@ -26,7 +27,7 @@ Navigation:
 
 
 
-           **Thanks :D**
+**Thanks!**
 
 # After the End
 
@@ -34,5 +35,5 @@ Navigation:
     move along..."
 
 <!--
-vim:tw=40
+vim:tw=40:ft=markdown:
 -->
