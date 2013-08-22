@@ -28,9 +28,7 @@ function! s:Start()
     let s:filetype = &filetype
 
     " make sure we can parse the filetype"
-    if has_key(g:presenting_slide_separators, s:filetype)
-      " echom "Separator for ft exists"
-    elseif
+    if !has_key(g:presenting_slide_separators, s:filetype)
       echom "Filetype not supported by presenting.vim."
       return
     endif
