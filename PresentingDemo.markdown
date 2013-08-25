@@ -1,9 +1,9 @@
 # presenting.vim
 
-           **presenting.vim** 
+           **presenting.vim**
 
-          a presentation tool 
-      
+          a presentation tool
+
                 for vim
 
 
