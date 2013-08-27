@@ -30,6 +30,22 @@ Navigation:
 ~~~~
 
 ========================================
+Inline Code
+========================================
+
+RST automatically supports syntax hl
+for python code!
+
+.. code:: python
+
+    if __name__ == '__main__':
+        import sys
+        sys.exit()
+
+
+~~~~
+
+========================================
 The End
 ========================================
 
