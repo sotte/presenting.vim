@@ -14,11 +14,11 @@ Version: 0.1.0
 ==============================================================================
 CONTENTS                                                 *presenting-contents*
 
-  1. Introduction..........................|presenting-introduction|
+  1. Introduction..........................|presenting_introduction|
   2. Usage.................................|presenting-usage|
   3. Mappings..............................|presenting-mappings|
   4. Configuration.........................|presenting-configuration|
-  5. Code..................................|presenting-code|
+  5. Issues................................|presenting-issues|
   6. License...............................|presenting-license|
 
 ==============================================================================
@@ -56,6 +56,19 @@ Also, take a look at the presenting.vim examples:
  * PresentingExample.rst
  * PresentingExample.org
 
+------------------------------------------------------------------------------
+INLINE CODE BLOCKS~
+
+You can use the syntax highlighting for inline code blocks of your preferred
+markup language.
+
+RST supports python by default:
+>
+  .. code:: python
+      def main():
+          return False
+<
+
 ==============================================================================
 MAPPINGS                                                 *presenting-mappings*
 
@@ -80,13 +93,13 @@ Add your own/customize the current ones: >
 where '----' is the separator.
 
 ==============================================================================
-CODE                                                         *presenting-code*
+ISSUES                                                     *presenting-issues*
 
-Having issues? *presenting-issues*
+Having issues?
  * goto https://github.com/sotte/presenting.vim/issues
- * or, better, goto |presenting-contribute|
+ * or, better, goto |presentingcontribute|
 
-Wanna contribute? *presenting-contribute*
+Wanna contribute?                                      *presentingcontribute*
  * https://github.com/sotte/presenting.vim
 
 presenting.vim only uses vim-script.
