@@ -22,7 +22,7 @@ Use pathogen_ or vundle_ to install presenting.vim.
  * https://github.com/gmarik/vundle
 
 
-# Usage 1/2
+# Usage 1/3
 
 * write you presentation in your favorite markup language
 * every slide is separated by a markup language specific marker
@@ -37,7 +37,21 @@ Use pathogen_ or vundle_ to install presenting.vim.
     ========  ===============
 ```
 
-# Usage 2/2
+# Usage 2/3
+
+Remember to inform presenting.vim about *filetype* it deals with! 
+For markdown
+
+```
+<!--
+vim:ft=markdown:
+-->
+```
+Notice no spaces!
+
+See examples for other filetypes.
+
+# Usage 3/3
 
 When you want to start presenting execute:
 ```
