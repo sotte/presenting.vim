@@ -5,9 +5,10 @@ if !exists('g:presenting_vim_using')
 endif
 
 if !exists('g:presenting_slide_separators')
-    " the separators define the new page transition for diffrent filetypes
+    " the separators define the new page transition for different filetypes
     let g:presenting_slide_separators = {
           \ 'markdown': '\v(^|\n)\ze#+',
+          \ 'mkd': '\v(^|\n)\ze#+',
           \ 'org': '\v(^|\n)#-{4,}',
           \ 'rst': '\v(^|\n)\~{4,}',
           \ }
