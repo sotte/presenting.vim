@@ -40,19 +40,15 @@ Use pathogen_ or vundle_ to install presenting.vim.
 # Usage 2/3
 
 Remember to inform presenting.vim about *filetype* it deals with! 
-For markdown
 
-```
-<!--
-vim:ft=markdown:
--->
-```
-Notice no spaces!
+Take a look at the presenting.vim examples to do that:
+ * PresentingExample.markdown
+ * PresentingExample.rst
+ * PresentingExample.org
 
-See examples for other filetypes.
 
 # Usage 3/3
-
+ 
 When you want to start presenting execute:
 ```
     :StartPresenting
@@ -62,11 +58,6 @@ Navigation:
  * n - next slide
  * p - previous slide
  * q - quit
-
-Also, take a look at the presenting.vim examples:
- * PresentingExample.markdown
- * PresentingExample.rst
- * PresentingExample.org
 
 Of course you can configure the slide separators.
 
