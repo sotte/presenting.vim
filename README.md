@@ -1,65 +1,74 @@
 # presenting.vim
 
-presenting.vim is a simple tool for presenting slides in vim
-based on text files.
+**presenting.vim** is a simple tool for presenting slides in vim based on text
+files.
 
-It is a clone of https://github.com/pct/present.vim
-which is a clone of https://github.com/sorah/presen.vim
+It is a clone of [present.vim][1] which is a clone of [presen.vim][2]. In
+contrast to its predecessors, presenting.vim:
 
-In contrast to its predecessors presenting.vim
- * has support for a number of markup languages,
- * can be extended, and
- * is documented
+  [1]: https://github.com/pct/present.vim
+  [2]: https://github.com/sorah/presen.vim
+
+  * has support for common markup languages,
+  * can be extended, and
+  * is documented
 
 Great, hey?
 
-
 # Installation
 
-Use pathogen_ or vundle_ to install presenting.vim.
+Use [pathogen][3] or [vundle][4] to install presenting.vim.
 
- * https://github.com/tpope/vim-pathogen
- * https://github.com/gmarik/vundle
+  [3]: https://github.com/tpope/vim-pathogen
+  [4]: https://github.com/gmarik/vundle
 
+# Configuration
 
-# Usage 1/2
+Simply write your presentation in your favorite markup language. Every slide
+is separated by a markup language specific marker.
 
-* write you presentation in your favorite markup language
-* every slide is separated by a markup language specific marker
+| Filetype | Slide Separator |
+| -------- | --------------- |
+| markdown | `# heading`     |
+| rst      | `~~~~`          |
+| orgmode  | `#----`         |
 
-```
-    ========  ===============
-    FILETYPE  SLIDE SEPARATOR
-    ========  ===============
-    markdown  # heading
-    rst       ~~~~
-    orgmode   #----
-    ========  ===============
-```
+These can be overridden or extended by setting `b:presenting_slide_separator`
+for your preferred filetype in your `.vimrc`. For example, set the `.rst` slide
+separator to `~~~~` via:
 
-# Usage 2/2
-
-When you want to start presenting execute:
-```
-    :StartPresenting
+```viml
+au FileType rst let b:presenting_slide_separator = '\v(^|\n)\~{4,}'
 ```
 
-Navigation:
- * n - next slide
- * p - previous slide
- * q - quit
+# Usage
 
-Also, take a look at the presenting.vim examples:
- * PresentingExample.markdown
- * PresentingExample.rst
- * PresentingExample.org
+When you want to start presenting, execute
+```
+:StartPresenting
+```
+
+Once presenting, slide navigation is accomplished via these keys:
+
+| Key | Action         |
+| --- | -------------- |
+| `n` | next slide     |
+| `p` | previous slide |
+| `q` | quit           |
+
+# Examples
+
+For examples of presenting.vim presentations, see:
+
+  * [PresentingExample.markdown](https://github.com/sotte/presenting.vim/blob/master/examples/PresentingDemo.markdown)
+  * [PresentingExample.rst](https://github.com/sotte/presenting.vim/blob/master/examples/PresentingDemo.org)
+  * [PresentingExample.org](https://github.com/sotte/presenting.vim/blob/master/examples/PresentingDemo.rst)
 
 Of course you can configure the slide separators.
 
-# Links
+# Contributing
 
-The code is on github. Pull requests are welcome!
- * https://github.com/sotte/presenting.vim
+The [code][5] and [issue tracker][6] are on github. Pull requests are welcome!
 
-Issue tracker:
- * https://github.com/sotte/presenting.vim/issues
+  [5]: https://github.com/sotte/presenting.vim
+  [6]: https://github.com/sotte/presenting.vim/issues
