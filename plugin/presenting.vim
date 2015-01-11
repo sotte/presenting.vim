@@ -4,15 +4,19 @@ if !exists('g:presenting_vim_using')
     let g:presenting_vim_using = 0
 endif
 
+" the separators define the new page transition for different filetypes
+let s:default_slide_separators = {
+      \ 'markdown': '\v(^|\n)\ze#+',
+      \ 'mkd': '\v(^|\n)\ze#+',
+      \ 'org': '\v(^|\n)#-{4,}',
+      \ 'rst': '\v(^|\n)\~{4,}',
+      \ }
+
 if !exists('g:presenting_slide_separators')
-    " the separators define the new page transition for different filetypes
-    let g:presenting_slide_separators = {
-          \ 'markdown': '\v(^|\n)\ze#+',
-          \ 'mkd': '\v(^|\n)\ze#+',
-          \ 'org': '\v(^|\n)#-{4,}',
-          \ 'rst': '\v(^|\n)\~{4,}',
-          \ }
+    let g:presenting_slide_separators = {}
 endif
+
+let g:presenting_slide_separators = extend(s:default_slide_separators, g:presenting_slide_separators)
 
 " Main logic / start the presentation {{{
 command! StartPresenting call s:Start()
