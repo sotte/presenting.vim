@@ -1,28 +1,19 @@
 " presenting.vim - presentation for vim
 
-if !exists('g:presenting_vim_using')
-    let g:presenting_vim_using = 0
+au FileType markdown let b:presenting_slide_separator = '\v(^|\n)\ze#+'
+au FileType mkd      let b:presenting_slide_separator = '\v(^|\n)\ze#+'
+au FileType org      let b:presenting_slide_separator = '\v(^|\n)#-{4,}'
+au FileType rst      let b:presenting_slide_separator = '\v(^|\n)\~{4,}'
+
+if !exists('b:presenting_vim_using')
+    let b:presenting_vim_using = 0
 endif
-
-" the separators define the new page transition for different filetypes
-let s:default_slide_separators = {
-      \ 'markdown': '\v(^|\n)\ze#+',
-      \ 'mkd': '\v(^|\n)\ze#+',
-      \ 'org': '\v(^|\n)#-{4,}',
-      \ 'rst': '\v(^|\n)\~{4,}',
-      \ }
-
-if !exists('g:presenting_slide_separators')
-    let g:presenting_slide_separators = {}
-endif
-
-let g:presenting_slide_separators = extend(s:default_slide_separators, g:presenting_slide_separators)
 
 " Main logic / start the presentation {{{
 command! StartPresenting call s:Start()
 function! s:Start()
 
-    if g:presenting_vim_using == 1
+    if b:presenting_vim_using == 1
         echo "presenting.vim is running. please quit either presentation."
         return
     endif
@@ -33,8 +24,8 @@ function! s:Start()
     let s:filetype = &filetype
 
     " make sure we can parse the filetype"
-    if !has_key(g:presenting_slide_separators, s:filetype)
-      echom "Filetype not supported by presenting.vim."
+    if !exists('b:presenting_slide_separator')
+      echom "set b:presenting_slide_separator for \"" . &filetype . "\" filetype to enable Presenting.vim"
       return
     endif
 
@@ -45,7 +36,7 @@ function! s:Start()
         echo "No page detected!"
         return
     endif
-    let g:presenting_vim_using = 1
+    let b:presenting_vim_using = 1
 
     tabedit _SLIDE_
     call s:ShowPage(0)
@@ -112,8 +103,8 @@ function! s:PrevPage()
 endfunction
 
 function! s:Exit()
-       if g:presenting_vim_using == 1
-           let g:presenting_vim_using = 0
+       if b:presenting_vim_using == 1
+           let b:presenting_vim_using = 0
            bdelete! _SLIDE_
        endif
 endfunction
@@ -121,8 +112,7 @@ endfunction
 " Parsing {{{
 function! s:Parse()
     " filetype specific separator
-    let sep = get(g:presenting_slide_separators, s:filetype)
-    let s:pages =  map(split(join(getline(1, '$'), "\n"), sep), 'split(v:val, "\n")')
+    let s:pages = map(split(join(getline(1, '$'), "\n"), b:presenting_slide_separator), 'split(v:val, "\n")')
     let s:max_page_number = len(s:pages) - 1
 endfunction
 " }}}
