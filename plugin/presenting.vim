@@ -1,17 +1,12 @@
 " presenting.vim - presentation for vim
 
+au FileType markdown let s:presenting_slide_separator = '\v(^|\n)\ze#+'
+au FileType mkd      let s:presenting_slide_separator = '\v(^|\n)\ze#+'
+au FileType org      let s:presenting_slide_separator = '\v(^|\n)#-{4,}'
+au FileType rst      let s:presenting_slide_separator = '\v(^|\n)\~{4,}'
+
 if !exists('g:presenting_vim_using')
     let g:presenting_vim_using = 0
-endif
-
-if !exists('g:presenting_slide_separators')
-    " the separators define the new page transition for different filetypes
-    let g:presenting_slide_separators = {
-          \ 'markdown': '\v(^|\n)\ze#+',
-          \ 'mkd': '\v(^|\n)\ze#+',
-          \ 'org': '\v(^|\n)#-{4,}',
-          \ 'rst': '\v(^|\n)\~{4,}',
-          \ }
 endif
 
 " Main logic / start the presentation {{{
@@ -29,8 +24,8 @@ function! s:Start()
     let s:filetype = &filetype
 
     " make sure we can parse the filetype"
-    if !has_key(g:presenting_slide_separators, s:filetype)
-      echom "Filetype not supported by presenting.vim."
+    if !exists('b:presenting_slide_separator') && !exists('s:presenting_slide_separator')
+      echom "set b:presenting_slide_separator for \"" . &filetype . "\" filetype to enable Presenting.vim"
       return
     endif
 
@@ -61,6 +56,7 @@ function! s:Start()
     autocmd BufWinLeave <buffer> call s:Exit()
 endfunction
 " }}}
+
 " Functions for Navigation {{{
 function! s:ShowPage(page_no)
     if a:page_no < 0
@@ -114,11 +110,12 @@ function! s:Exit()
        endif
 endfunction
 " Functions for Navigation }}}
+
 " Parsing {{{
 function! s:Parse()
     " filetype specific separator
-    let sep = get(g:presenting_slide_separators, s:filetype)
-    let s:pages =  map(split(join(getline(1, '$'), "\n"), sep), 'split(v:val, "\n")')
+    let l:sep = exists('b:presenting_slide_separator') ? b:presenting_slide_separator : s:presenting_slide_separator
+    let s:pages = map(split(join(getline(1, '$'), "\n"), l:sep), 'split(v:val, "\n")')
     let s:max_page_number = len(s:pages) - 1
 endfunction
 " }}}
