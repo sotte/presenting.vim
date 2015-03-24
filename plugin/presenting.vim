@@ -17,18 +17,17 @@ function! s:Start()
     return
   endif
 
-  let s:page_number = 0
-  let s:max_page_number = 0
-  let s:pages = []
+  " make sure we can parse the current filetype
   let s:filetype = &filetype
-
-  " make sure we can parse the filetype"
   if !exists('b:presenting_slide_separator') && !exists('s:presenting_slide_separator')
     echom "set b:presenting_slide_separator for \"" . &filetype . "\" filetype to enable Presenting.vim"
     return
   endif
 
   " actually parse the document into pages
+  let s:page_number = 0
+  let s:max_page_number = 0
+  let s:pages = []
   call s:Parse()
 
   if empty(s:pages)
