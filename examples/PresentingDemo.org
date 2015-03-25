@@ -21,6 +21,18 @@ Navigation:
  * q - quit
 
 #----
+* Inline Code
+org automatically supports syntax hl
+for many languagues!
+
+#+BEGIN_SRC python
+if __name__ == '__main__':
+      import sys
+      sys.exit()
+#+END_SRC
+
+
+#----
 * The End
 
 
