@@ -10,7 +10,6 @@ if !exists('g:presenting_vim_using')
 endif
 
 " Main logic / start the presentation {{{
-command! StartPresenting call s:Start()
 function! s:Start()
   if g:presenting_vim_using == 1
     echo "presenting.vim is running. please quit either presentation."
@@ -42,17 +41,20 @@ function! s:Start()
   setlocal statusline=%<
 
   " commands for the navigation
-  command! -buffer PageNext call s:NextPage()
-  command! -buffer PagePrev call s:PrevPage()
-  command! -buffer ExitPresent call s:Exit()
+  command! -buffer PresentingNext call s:NextPage()
+  command! -buffer PresentingPrev call s:PrevPage()
+  command! -buffer PresentingExit call s:Exit()
 
   " mappings for the navigation
-  nnoremap <buffer> <silent> n :PageNext<CR>
-  nnoremap <buffer> <silent> p :PagePrev<CR>
-  nnoremap <buffer> <silent> q :ExitPresent<CR>
+  nnoremap <buffer> <silent> n :PresentingNext<CR>
+  nnoremap <buffer> <silent> p :PresentingPrev<CR>
+  nnoremap <buffer> <silent> q :PresentingExit<CR>
 
   autocmd BufWinLeave <buffer> call s:Exit()
 endfunction
+
+command! StartPresenting call s:Start()
+command! PresentingStart call s:Start()
 " }}}
 
 " Functions for Navigation {{{
