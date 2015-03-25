@@ -14,7 +14,7 @@ Each heading is a separate slide!
 Start presenting:
 
 ```
-  :StartPresenting
+  :PresentingStart
 ```
 
 Navigation:

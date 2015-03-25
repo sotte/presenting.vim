@@ -12,7 +12,7 @@ Separate slides by '#----'
 
 Start presenting:
 
-  :StartPresenting
+  :PresentingStart
 
 Navigation:
 

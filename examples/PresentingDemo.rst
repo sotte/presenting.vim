@@ -19,7 +19,7 @@ Slides are separated by four ~
 
 Start presenting::
 
-  :StartPresenting
+  :PresentingStart
 
 Navigation:
 
