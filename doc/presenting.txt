@@ -45,7 +45,7 @@ Every slide is separated by a markup language specific marker:
 <
 
 When you want to start presenting execute: >
-  :StartPresenting
+  :PresentingStart
 <
 
 You can navigate to the next slide (n), the previous slide (p) or quit (q)

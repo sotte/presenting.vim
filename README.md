@@ -45,7 +45,7 @@ au FileType rst let b:presenting_slide_separator = '\v(^|\n)\~{4,}'
 
 When you want to start presenting, execute
 ```
-:StartPresenting
+:PresentingStart
 ```
 
 Once presenting, slide navigation is accomplished via these keys:
