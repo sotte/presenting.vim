@@ -42,6 +42,7 @@ Every slide is separated by a markup language specific marker:
  markdown       |  # heading
  rst            |  ~~~~
  orgmode        |  #----
+ GoLang slide   |  * heading
 <
 
 When you want to start presenting execute: >
@@ -55,6 +56,7 @@ Also, take a look at the presenting.vim examples:
  * PresentingExample.markdown
  * PresentingExample.rst
  * PresentingExample.org
+ * PresentingExample.slide
 
 ------------------------------------------------------------------------------
 INLINE CODE BLOCKS~
