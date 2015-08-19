@@ -4,6 +4,7 @@ au FileType markdown let s:presenting_slide_separator = '\v(^|\n)\ze#+'
 au FileType mkd      let s:presenting_slide_separator = '\v(^|\n)\ze#+'
 au FileType org      let s:presenting_slide_separator = '\v(^|\n)#-{4,}'
 au FileType rst      let s:presenting_slide_separator = '\v(^|\n)\~{4,}'
+au FileType slide    let s:presenting_slide_separator = '\v(^|\n)\ze\*'
 
 if !exists('g:presenting_vim_using')
   let g:presenting_vim_using = 0
