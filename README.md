@@ -65,6 +65,7 @@ For examples of presenting.vim presentations, see:
   * [PresentingExample.markdown](https://github.com/sotte/presenting.vim/blob/master/examples/PresentingDemo.markdown)
   * [PresentingExample.rst](https://github.com/sotte/presenting.vim/blob/master/examples/PresentingDemo.org)
   * [PresentingExample.org](https://github.com/sotte/presenting.vim/blob/master/examples/PresentingDemo.rst)
+  * [PresentingExample.slide](https://github.com/sotte/presenting.vim/blob/master/examples/PresentingDemo.slide)
 
 Of course you can configure the slide separators.
 
