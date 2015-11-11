@@ -42,8 +42,8 @@ function! s:Start()
   setlocal statusline=%<
 
   " commands for the navigation
-  command! -buffer PresentingNext call s:NextPage()
-  command! -buffer PresentingPrev call s:PrevPage()
+  command! -buffer -count=1 PresentingNext call s:NextPage(<count>)
+  command! -buffer -count=1 PresentingPrev call s:PrevPage(<count>)
   command! -buffer PresentingExit call s:Exit()
 
   " mappings for the navigation
@@ -90,18 +90,20 @@ function! s:ShowPage(page_no)
   execute ":normal! gg"
 endfunction
 
-function! s:NextPage()
-  if s:page_number+1 <= s:max_page_number
-    let s:page_number += 1
-    call s:ShowPage(s:page_number)
+function! s:NextPage(count)
+  let s:page_number += a:count
+  if s:page_number > s:max_page_number
+    let s:page_number = s:max_page_number
   endif
+  call s:ShowPage(s:page_number)
 endfunction
 
-function! s:PrevPage()
-  if s:page_number-1 >= 0
-    let s:page_number -= 1
-    call s:ShowPage(s:page_number)
+function! s:PrevPage(count)
+  let s:page_number -= a:count
+  if s:page_number < 0
+    let s:page_number = 0
   endif
+  call s:ShowPage(s:page_number)
 endfunction
 
 function! s:Exit()
