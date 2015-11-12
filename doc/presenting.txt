@@ -94,6 +94,24 @@ Add your own/customize the current ones: >
 <
 where '----' is the separator.
 
+------------------------------------------------------------------------------
+                                                       *presenting_statusline*
+This option allows you to customize the format of the statusline for the
+presentation buffer. See |statusline| for available fields.
+
+The following variables are available for use in this option:
+
+variable                         meaning~
+`b:presenting_page_current`        The current page number (starting from 1)
+`b:presenting_page_total`          Total number of pages in the slide
+
+Default: >
+  :let g:presenting_statusline =
+    \ '%{b:presenting_page_current}/%{b:presenting_page_total}'
+<
+Set the statusline to display cursor position: >
+  :let g:presenting_statusline = '%l, %c'
+<
 ==============================================================================
 ISSUES                                                     *presenting-issues*
 

@@ -10,6 +10,11 @@ if !exists('g:presenting_vim_using')
   let g:presenting_vim_using = 0
 endif
 
+if !exists('g:presenting_statusline')
+  let g:presenting_statusline =
+    \ '%{b:presenting_page_current}/%{b:presenting_page_total}'
+endif
+
 " Main logic / start the presentation {{{
 function! s:Start()
   if g:presenting_vim_using == 1
@@ -39,7 +44,7 @@ function! s:Start()
   tabedit _SLIDE_
   call s:ShowPage(0)
   let &filetype=s:filetype
-  setlocal statusline=%<
+  call s:UpdateStatusLine()
 
   " commands for the navigation
   command! -buffer -count=1 PresentingNext call s:NextPage(<count>)
@@ -84,7 +89,7 @@ function! s:ShowPage(page_no)
   setlocal nocursorcolumn
   setlocal nocursorline
   setlocal cmdheight=1
-  setlocal statusline=%<
+  call s:UpdateStatusLine()
 
   " move cursor to the top
   execute ":normal! gg"
@@ -112,6 +117,13 @@ function! s:Exit()
     bdelete! _SLIDE_
   endif
 endfunction
+
+function! s:UpdateStatusLine()
+  let b:presenting_page_current = s:page_number + 1
+  let b:presenting_page_total = len(s:pages)
+  let &l:statusline = g:presenting_statusline
+endfunction
+
 " Functions for Navigation }}}
 
 " Parsing {{{
