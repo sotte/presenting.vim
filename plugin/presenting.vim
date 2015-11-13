@@ -76,7 +76,7 @@ function! s:ShowPage(page_no)
   " replace content of buffer with the next page
   setlocal noreadonly
   setlocal modifiable
-  execute ":normal! G$vggd"
+  %delete _
   call append(0, s:pages[s:page_number])
 
   " some options for the buffer
