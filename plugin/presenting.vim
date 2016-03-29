@@ -80,15 +80,16 @@ function! s:ShowPage(page_no)
   call append(0, s:pages[s:page_number])
 
   " some options for the buffer
-  setlocal readonly
-  setlocal nomodifiable
   setlocal buftype=nofile
-  setlocal noswapfile
-  setlocal nonumber
-  setlocal norelativenumber
+  setlocal cmdheight=1
   setlocal nocursorcolumn
   setlocal nocursorline
-  setlocal cmdheight=1
+  setlocal nofoldenable
+  setlocal nomodifiable
+  setlocal nonumber
+  setlocal norelativenumber
+  setlocal noswapfile
+  setlocal readonly
   call s:UpdateStatusLine()
 
   " move cursor to the top
