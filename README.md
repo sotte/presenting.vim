@@ -1,7 +1,9 @@
 # presenting.vim
 
-**presenting.vim** is a simple tool for presenting slides in vim based on text
-files.
+**presenting.vim** is a vim plugin that turns your markup into presentable
+slides (in vim).
+
+![presentin.vim ascii demo](examples/demo.gif)
 
 It is a clone of [present.vim][1] which is a clone of [presen.vim][2]. In
 contrast to its predecessors, presenting.vim:
