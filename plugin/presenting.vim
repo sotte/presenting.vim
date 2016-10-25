@@ -76,7 +76,8 @@ function! s:ShowPage(page_no)
   " replace content of buffer with the next page
   setlocal noreadonly
   setlocal modifiable
-  %delete _
+  " avoid "--No lines in buffer--" msg by using silent
+  silent %delete _
   call append(0, s:pages[s:page_number])
 
   " some options for the buffer
