@@ -41,7 +41,8 @@ function! s:Start()
   endif
   let g:presenting_vim_using = 1
 
-  tabedit _SLIDE_
+  " avoid '"_SLIDE_" [New File]' msg by using silent
+  silent tabedit _SLIDE_
   call s:ShowPage(0)
   let &filetype=s:filetype
   call s:UpdateStatusLine()
