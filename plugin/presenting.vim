@@ -98,6 +98,10 @@ function! s:ShowPage(page_no)
   setlocal norelativenumber
   setlocal noswapfile
   setlocal readonly
+  setlocal wrap
+  setlocal linebreak
+  setlocal breakindent
+  setlocal nolist
   call s:UpdateStatusLine()
 
   " move cursor to the top
