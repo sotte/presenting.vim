@@ -15,6 +15,10 @@ if !exists('g:presenting_statusline')
     \ '%{b:presenting_page_current}/%{b:presenting_page_total}'
 endif
 
+if !exists('g:presenting_top_margin')
+  let g:presenting_top_margin = 0
+endif
+
 " Main logic / start the presentation {{{
 function! s:Start()
   if g:presenting_vim_using == 1
@@ -80,6 +84,8 @@ function! s:ShowPage(page_no)
   " avoid "--No lines in buffer--" msg by using silent
   silent %delete _
   call append(0, s:pages[s:page_number])
+  call append(0, map(range(1,g:presenting_top_margin), '""'))
+  call append(line('$'), map(range(1,winheight('%')-(line('w$')-line('w0')+1)), '""'))
 
   " some options for the buffer
   setlocal buftype=nofile

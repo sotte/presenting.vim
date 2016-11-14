@@ -113,6 +113,14 @@ Default: >
 Set the statusline to display cursor position: >
   :let g:presenting_statusline = '%l, %c'
 <
+------------------------------------------------------------------------------
+                                                       *presenting_top_margin*
+This option lets you define the number of blank lines to insert above each
+slide. Default: 0
+>
+  :let g:presenting_top_margin = 2
+<
+
 ==============================================================================
 ISSUES                                                     *presenting-issues*
 
