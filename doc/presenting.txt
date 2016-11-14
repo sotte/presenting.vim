@@ -84,15 +84,16 @@ In the presentation mode there are the following mapping:
 CONFIGURATION                                       *presenting-configuration*
 
                                                  *presenting_slide_separators*
-This option defines the 'filetype-->slide separator' mapping and allows you
-to edit the current ones and add new ones.
-List the existing ones: >
-  :echo g:presenting_slide_separators
+This option overrides the default regular expression that specifies the slide
+separators, or defines a separator for filetypes not supported by default.
+
+Customize a supported filetype: >
+  au FileType rst let b:presenting_slide_separator = '\v(^|\n)\~{4,}'
 <
-Add your own/customize the current ones: >
-  :let g:presenting_slide_separators['my_filetype']='----'
+Add your own filetype: >
+  au FileType my_filetype let b:presenting_slide_separator = '----'
 <
-where '----' is the separator.
+  where '----' is the separator.
 
 ------------------------------------------------------------------------------
                                                        *presenting_statusline*
