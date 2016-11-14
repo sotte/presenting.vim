@@ -85,6 +85,7 @@ function! s:ShowPage(page_no)
   silent %delete _
   call append(0, s:pages[s:page_number])
   call append(0, map(range(1,g:presenting_top_margin), '""'))
+  execute ":normal! gg"
   call append(line('$'), map(range(1,winheight('%')-(line('w$')-line('w0')+1)), '""'))
 
   " some options for the buffer
