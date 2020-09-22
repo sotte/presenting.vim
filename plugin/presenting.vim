@@ -103,6 +103,8 @@ function! s:ShowPage(page_no)
   setlocal linebreak
   setlocal breakindent
   setlocal nolist
+  let s:showtabline = &showtabline
+  set showtabline=0
   call s:UpdateStatusLine()
 
   " move cursor to the top
@@ -129,6 +131,7 @@ function! s:Exit()
   if g:presenting_vim_using == 1
     let g:presenting_vim_using = 0
     bdelete! _SLIDE_
+    let &showtabline = s:showtabline
   endif
 endfunction
 
