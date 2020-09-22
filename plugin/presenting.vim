@@ -6,18 +6,12 @@ au FileType org      let s:presenting_slide_separator = '\v(^|\n)#-{4,}'
 au FileType rst      let s:presenting_slide_separator = '\v(^|\n)\~{4,}'
 au FileType slide    let s:presenting_slide_separator = '\v(^|\n)\ze\*'
 
-if !exists('g:presenting_vim_using')
-  let g:presenting_vim_using = 0
-endif
-
-if !exists('g:presenting_statusline')
-  let g:presenting_statusline =
-    \ '%{b:presenting_page_current}/%{b:presenting_page_total}'
-endif
-
-if !exists('g:presenting_top_margin')
-  let g:presenting_top_margin = 0
-endif
+let g:presenting_vim_using = get(g:, 'presenting_vim_using', 0)
+let g:presenting_statusline = get(g:, 'presenting_statusline', '%{b:presenting_page_current}/%{b:presenting_page_total}')
+let g:presenting_top_margin = get(g:, 'presenting_top_margin', 0)
+let g:presenting_next = get(g:, 'presenting_next', 'n')
+let g:presenting_prev = get(g:, 'presenting_prev', 'p')
+let g:presenting_quit = get(g:, 'presenting_quit', 'q')
 
 " Main logic / start the presentation {{{
 function! s:Start()
@@ -57,9 +51,9 @@ function! s:Start()
   command! -buffer PresentingExit call s:Exit()
 
   " mappings for the navigation
-  nnoremap <buffer> <silent> n :PresentingNext<CR>
-  nnoremap <buffer> <silent> p :PresentingPrev<CR>
-  nnoremap <buffer> <silent> q :PresentingExit<CR>
+  execute 'nnoremap <buffer> <silent> ' . g:presenting_next . ' :PresentingNext<CR>'
+  execute 'nnoremap <buffer> <silent> ' . g:presenting_prev . ' :PresentingPrev<CR>'
+  execute 'nnoremap <buffer> <silent> ' . g:presenting_quit . ' :PresentingExit<CR>'
 
   autocmd BufWinLeave <buffer> call s:Exit()
 endfunction
