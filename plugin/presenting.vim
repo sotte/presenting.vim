@@ -32,6 +32,7 @@ function! s:Start()
   let s:max_page_number = 0
   let s:pages = []
   call s:Parse()
+  call s:Format()
 
   if empty(s:pages)
     echo "No page detected!"
@@ -137,12 +138,37 @@ endfunction
 
 " Functions for Navigation }}}
 
-" Parsing {{{
+" Parsing & Formatting {{{
 function! s:Parse()
   " filetype specific separator
   let l:sep = exists('b:presenting_slide_separator') ? b:presenting_slide_separator : s:presenting_slide_separator
   let s:pages = map(split(join(getline(1, '$'), "\n"), l:sep), 'split(v:val, "\n")')
   let s:max_page_number = len(s:pages) - 1
 endfunction
+
+function! s:Format()
+  " The {s:filetype}#format() autoload function processes one line of
+  " text at a time. Some lines may depend on a prior line, such as
+  " numbering and indenting numbered lists. This state information is
+  " passed into {s:filetyepe}#format() through the state Dictionary
+  " variable. The function will use it however it needs to. s:Format()
+  " doesn't care how it's used, but must keep the state variable intact
+  " for each successive call to the autoload function.
+  let state = {}
+
+  try
+    for i in range(0,len(s:pages)-1)
+      let replacement_page = []
+      for j in range(0, len(s:pages[i])-1)
+        let [new_text, state] = {s:filetype}#format(s:pages[i][j], state)
+        let replacement_page += new_text
+      endfor
+      let s:pages[i] = replacement_page
+    endfor
+  catch /E117/
+    echo 'Auto load function '.s:filetype.'#format(text, state) does not exist.'
+  endtry
+endfunction
+
 " }}}
-" vim:ts=2:sw=2:expandtab
+" vim:ts=2:sw=2:expandtab:foldmethod=marker
