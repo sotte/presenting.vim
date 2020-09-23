@@ -1,6 +1,6 @@
 " presenting.vim - presentation for vim
 
-au FileType markdown let s:presenting_slide_separator = '\v(^|\n)\ze#+'
+au FileType markdown let s:presenting_slide_separator = '\v(^|\n)\ze#{1,2}[^#]'
 au FileType mkd      let s:presenting_slide_separator = '\v(^|\n)\ze#+'
 au FileType org      let s:presenting_slide_separator = '\v(^|\n)#-{4,}'
 au FileType rst      let s:presenting_slide_separator = '\v(^|\n)\~{4,}'
