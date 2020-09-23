@@ -8,9 +8,15 @@ au FileType slide    let s:presenting_slide_separator = '\v(^|\n)\ze\*'
 
 let g:presenting_statusline = get(g:, 'presenting_statusline', '%{b:presenting_page_current}/%{b:presenting_page_total}')
 let g:presenting_top_margin = get(g:, 'presenting_top_margin', 0)
+
 let g:presenting_next = get(g:, 'presenting_next', 'n')
 let g:presenting_prev = get(g:, 'presenting_prev', 'p')
 let g:presenting_quit = get(g:, 'presenting_quit', 'q')
+
+let g:presenting_figlets = get(g:, 'presenting_figlets', 1)
+let g:presenting_font_large = get(g:, 'presenting_font_large', 'small')
+let g:presenting_font_small = get(g:, 'presenting_font_small', 'straight')
+
 
 " Main logic / start the presentation {{{
 function! s:Start()
