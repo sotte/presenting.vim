@@ -6,7 +6,6 @@ au FileType org      let s:presenting_slide_separator = '\v(^|\n)#-{4,}'
 au FileType rst      let s:presenting_slide_separator = '\v(^|\n)\~{4,}'
 au FileType slide    let s:presenting_slide_separator = '\v(^|\n)\ze\*'
 
-let g:presenting_vim_using = get(g:, 'presenting_vim_using', 0)
 let g:presenting_statusline = get(g:, 'presenting_statusline', '%{b:presenting_page_current}/%{b:presenting_page_total}')
 let g:presenting_top_margin = get(g:, 'presenting_top_margin', 0)
 let g:presenting_next = get(g:, 'presenting_next', 'n')
@@ -15,8 +14,8 @@ let g:presenting_quit = get(g:, 'presenting_quit', 'q')
 
 " Main logic / start the presentation {{{
 function! s:Start()
-  if g:presenting_vim_using == 1
-    echo "presenting.vim is running. please quit either presentation."
+  if exists('g:presenting_vim_running')
+    echo "presenting.vim is already running. Please quit either presentation."
     return
   endif
 
@@ -38,7 +37,7 @@ function! s:Start()
     echo "No page detected!"
     return
   endif
-  let g:presenting_vim_using = 1
+  let g:presenting_vim_running = 1
 
   " avoid '"_SLIDE_" [New File]' msg by using silent
   silent tabedit _SLIDE_
@@ -123,8 +122,8 @@ function! s:PrevPage(count)
 endfunction
 
 function! s:Exit()
-  if g:presenting_vim_using == 1
-    let g:presenting_vim_using = 0
+  if exists('g:presenting_vim_running')
+    unlet g:presenting_vim_running
     bdelete! _SLIDE_
     let &showtabline = s:showtabline
   endif
