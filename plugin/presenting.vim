@@ -1,10 +1,10 @@
 " presenting.vim - presentation for vim
 
-au FileType markdown let s:presenting_slide_separator = '\v(^|\n)\ze#+'
-au FileType mkd      let s:presenting_slide_separator = '\v(^|\n)\ze#+'
-au FileType org      let s:presenting_slide_separator = '\v(^|\n)#-{4,}'
-au FileType rst      let s:presenting_slide_separator = '\v(^|\n)\~{4,}'
-au FileType slide    let s:presenting_slide_separator = '\v(^|\n)\ze\*'
+au FileType markdown let b:presenting_slide_separator_default = '\v(^|\n)\ze#+'
+au FileType mkd      let b:presenting_slide_separator_default = '\v(^|\n)\ze#+'
+au FileType org      let b:presenting_slide_separator_default = '\v(^|\n)#-{4,}'
+au FileType rst      let b:presenting_slide_separator_default = '\v(^|\n)\~{4,}'
+au FileType slide    let b:presenting_slide_separator_default = '\v(^|\n)\ze\*'
 
 if !exists('g:presenting_statusline')
   let g:presenting_statusline =
@@ -18,8 +18,8 @@ endif
 " Main logic / start the presentation {{{
 function! s:Start()
   " make sure we can parse the current filetype
-  if !exists('b:presenting_slide_separator') && !exists('s:presenting_slide_separator')
   let l:filetype = &filetype
+  if !exists('b:presenting_slide_separator') && !exists('b:presenting_slide_separator_default')
     echom "set b:presenting_slide_separator for \"" . l:filetype . "\" filetype to enable Presenting.vim"
     return
   endif
@@ -118,7 +118,7 @@ endfunction
 
 " Parsing {{{
 function! s:Parse()
-  let l:sep = exists('b:presenting_slide_separator') ? b:presenting_slide_separator : s:presenting_slide_separator
+  let l:sep = exists('b:presenting_slide_separator') ? b:presenting_slide_separator : b:presenting_slide_separator_default
   return map(split(join(getline(1, '$'), "\n"), l:sep), 'split(v:val, "\n")')
 endfunction
 " }}}
