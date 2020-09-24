@@ -15,7 +15,7 @@ if !exists('g:presenting_top_margin')
   let g:presenting_top_margin = 0
 endif
 
-" Main logic / start the presentation {{{
+" Main logic / start the presentation {{{1
 function! s:Start()
   " make sure we can parse the current filetype
   let l:filetype = &filetype
@@ -67,9 +67,8 @@ endfunction
 
 command! StartPresenting call s:Start()
 command! PresentingStart call s:Start()
-" }}}
 
-" Functions for Navigation {{{
+" Functions for Navigation {{{1
 function! s:ShowPage(page_no)
   if a:page_no < 0 || a:page_no >= len(b:pages)
     return
@@ -112,12 +111,10 @@ function! s:UpdateStatusLine()
   let &l:statusline = g:presenting_statusline
 endfunction
 
-" Functions for Navigation }}}
-
-" Parsing {{{
+" Parsing {{{1
 function! s:Parse()
   let l:sep = exists('b:presenting_slide_separator') ? b:presenting_slide_separator : b:presenting_slide_separator_default
   return map(split(join(getline(1, '$'), "\n"), l:sep), 'split(v:val, "\n")')
 endfunction
 " }}}
-" vim:ts=2:sw=2:expandtab
+" vim:ts=2:sw=2:expandtab:foldmethod=marker
