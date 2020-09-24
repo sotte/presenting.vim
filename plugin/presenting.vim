@@ -38,6 +38,19 @@ function! s:Start()
   let b:page_number = 0
   let b:max_page_number = len(b:pages) - 1
 
+  " some options for the buffer
+  setlocal buftype=nofile
+  setlocal cmdheight=1
+  setlocal nocursorcolumn nocursorline
+  setlocal nofoldenable
+  setlocal nonumber norelativenumber
+  setlocal noswapfile
+  setlocal wrap
+  setlocal linebreak
+  setlocal breakindent
+  setlocal nolist
+  let &filetype=l:filetype
+
   call s:ShowPage(0)
   call s:UpdateStatusLine()
 
@@ -64,30 +77,15 @@ function! s:ShowPage(page_no)
   let b:page_number = a:page_no
 
   " replace content of buffer with the next page
-  setlocal noreadonly
-  setlocal modifiable
+  setlocal noreadonly modifiable
   " avoid "--No lines in buffer--" msg by using silent
   silent %delete _
   call append(0, b:pages[b:page_number])
   call append(0, map(range(1,g:presenting_top_margin), '""'))
   execute ":normal! gg"
   call append(line('$'), map(range(1,winheight('%')-(line('w$')-line('w0')+1)), '""'))
+  setlocal readonly nomodifiable
 
-  " some options for the buffer
-  setlocal buftype=nofile
-  setlocal cmdheight=1
-  setlocal nocursorcolumn
-  setlocal nocursorline
-  setlocal nofoldenable
-  setlocal nomodifiable
-  setlocal nonumber
-  setlocal norelativenumber
-  setlocal noswapfile
-  setlocal readonly
-  setlocal wrap
-  setlocal linebreak
-  setlocal breakindent
-  setlocal nolist
   call s:UpdateStatusLine()
 
   " move cursor to the top
