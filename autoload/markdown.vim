@@ -42,16 +42,18 @@ function! markdown#format(text, state)
     let l:state.bullet_nums[-1] += 1
     let new_text = [substitute(a:text, '^\s*\zs\d\+', l:state.bullet_nums[-1], '')]
 
-  elseif a:text =~? '^#\{1,3}\ze[^#]' && g:presenting_figlets  && executable('figlet') " Replace h1, h2 and h3 text with figlets
-    let font = a:text =~? '^##' ? g:presenting_font_small : g:presenting_font_large
+  elseif a:text =~? '^#\{1,3}[^#]' && g:presenting_figlets && executable('figlet') " Replace h1, h2 and h3 text with figlets
+    let level = strchars(matchstr(a:text, '^#\+'))
+    let font = level == 1 ? g:presenting_font_large : g:presenting_font_small
     let new_text = split(system('figlet -w '.winwidth(0).' -f '.font.' '.shellescape(substitute(a:text,'^#\+s*','',''))), "\n")
 
     let w = max(map(copy(new_text), 'strchars(v:val)'))
-    call map(new_text, 'repeat(" ",(winwidth(0)-w)/2).v:val')
+    call map(new_text, '"#".level.repeat(" ",(winwidth(0)-w)/2).v:val')
 
-  elseif a:text =~? '^#\{1,4}\ze[^#]' " Center h4 text (and h1-h3 if no figlets) on the window.
+  elseif a:text =~? '^#\{1,4}[^#]' " Center h4 text (and h1-h3 if no figlets) on the window.
+    let level = strchars(matchstr(a:text, '^#\+'))
     let l:text = substitute(a:text,'^#\+s*','','')
-    let new_text = [repeat(' ', (winwidth(0)-strchars(l:text))/2) . l:text]
+    let new_text = ['#'.level.repeat(' ', (winwidth(0)-strchars(l:text))/2) . l:text]
 
   elseif a:text =~? '^\s*>' " Wrap and prefix quoted blocks.
     let new_text = []
