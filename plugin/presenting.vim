@@ -52,7 +52,12 @@ function! s:Start()
   setlocal linebreak
   setlocal breakindent
   setlocal nolist
-  let &filetype=l:filetype
+
+  try
+    call {l:filetype}#set_filetype()
+  catch /E117/
+    let &filetype=l:filetype
+  endtry
 
   call s:ShowPage(0)
   call s:UpdateStatusLine()

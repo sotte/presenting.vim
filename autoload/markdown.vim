@@ -1,8 +1,16 @@
-" This module is used to perform custom formatting of the markdown
-" file before being presented.
+" These autoload modules perform custom formatting for the different
+" filetypes. (This particular one is for markdown files.) These modules
+" must implement the ...#format() function. See the comment in
+" plugin/presenting.vim's s:Format() function for details.
+"
+" The ...#set_filetype() function can optionally be implemented here as well.
+" Its purpose is to set the filetype of the slide show buffer. If not
+" implemented, the filetype of the original file (markdown in this case) will
+" be used.
 
-function! s:InitializeState(state)
-  return extend(a:state, #{bullet_nums:[0], in_code_block:0, indent:0}, 'keep')
+
+function! markdown#set_filetype()
+  set filetype=presenting_markdown
 endfunction
 
 function! markdown#format(text, state)
@@ -67,5 +75,8 @@ function! markdown#format(text, state)
   return [new_text, l:state]
 endfunction
 
-" }}}
+function! s:InitializeState(state)
+  return extend(a:state, #{bullet_nums:[0], in_code_block:0, indent:0}, 'keep')
+endfunction
+
 " vim:ts=2:sw=2:expandtab
