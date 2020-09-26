@@ -1,14 +1,13 @@
 " presenting.vim - presentation for vim
 
-au FileType markdown let s:presenting_slide_separator = '\v(^|\n)\ze#{1,2}[^#]'
-au FileType mkd      let s:presenting_slide_separator = '\v(^|\n)\ze#+'
-au FileType org      let s:presenting_slide_separator = '\v(^|\n)#-{4,}'
-au FileType rst      let s:presenting_slide_separator = '\v(^|\n)\~{4,}'
-au FileType slide    let s:presenting_slide_separator = '\v(^|\n)\ze\*'
+au FileType markdown let b:presenting_slide_separator_default = '\v(^|\n)\ze#+'
+au FileType mkd      let b:presenting_slide_separator_default = '\v(^|\n)\ze#+'
+au FileType org      let b:presenting_slide_separator_default = '\v(^|\n)#-{4,}'
+au FileType rst      let b:presenting_slide_separator_default = '\v(^|\n)\~{4,}'
+au FileType slide    let b:presenting_slide_separator_default = '\v(^|\n)\ze\*'
 
 let g:presenting_statusline = get(g:, 'presenting_statusline', '%{b:presenting_page_current}/%{b:presenting_page_total}')
 let g:presenting_top_margin = get(g:, 'presenting_top_margin', 0)
-
 let g:presenting_next = get(g:, 'presenting_next', 'n')
 let g:presenting_prev = get(g:, 'presenting_prev', 'p')
 let g:presenting_quit = get(g:, 'presenting_quit', 'q')
@@ -17,38 +16,44 @@ let g:presenting_figlets = get(g:, 'presenting_figlets', 1)
 let g:presenting_font_large = get(g:, 'presenting_font_large', 'small')
 let g:presenting_font_small = get(g:, 'presenting_font_small', 'straight')
 
-
-" Main logic / start the presentation {{{
+" Main logic / start the presentation {{{1
 function! s:Start()
-  if exists('g:presenting_vim_running')
-    echo "presenting.vim is already running. Please quit either presentation."
-    return
-  endif
-
   " make sure we can parse the current filetype
-  let s:filetype = &filetype
-  if !exists('b:presenting_slide_separator') && !exists('s:presenting_slide_separator')
-    echom "set b:presenting_slide_separator for \"" . &filetype . "\" filetype to enable Presenting.vim"
+  let l:filetype = &filetype
+  if !exists('b:presenting_slide_separator') && !exists('b:presenting_slide_separator_default')
+    echom "set b:presenting_slide_separator for \"" . l:filetype . "\" filetype to enable Presenting.vim"
     return
   endif
 
-  " actually parse the document into pages
-  let s:page_number = 0
-  let s:max_page_number = 0
-  let s:pages = []
-  call s:Parse()
+  " Parse the document into pages
+  let l:pages = s:Parse()
   call s:Format()
 
-  if empty(s:pages)
+  if empty(l:pages)
     echo "No page detected!"
     return
   endif
-  let g:presenting_vim_running = 1
 
   " avoid '"_SLIDE_" [New File]' msg by using silent
-  silent tabedit _SLIDE_
+  execute 'silent tabedit _SLIDE_'.localtime().'_'
+  let b:pages = l:pages
+  let b:page_number = 0
+  let b:max_page_number = len(b:pages) - 1
+
+  " some options for the buffer
+  setlocal buftype=nofile
+  setlocal cmdheight=1
+  setlocal nocursorcolumn nocursorline
+  setlocal nofoldenable
+  setlocal nonumber norelativenumber
+  setlocal noswapfile
+  setlocal wrap
+  setlocal linebreak
+  setlocal breakindent
+  setlocal nolist
+  let &filetype=l:filetype
+
   call s:ShowPage(0)
-  let &filetype=s:filetype
   call s:UpdateStatusLine()
 
   " commands for the navigation
@@ -60,51 +65,28 @@ function! s:Start()
   execute 'nnoremap <buffer> <silent> ' . g:presenting_next . ' :PresentingNext<CR>'
   execute 'nnoremap <buffer> <silent> ' . g:presenting_prev . ' :PresentingPrev<CR>'
   execute 'nnoremap <buffer> <silent> ' . g:presenting_quit . ' :PresentingExit<CR>'
-
-  autocmd BufWinLeave <buffer> call s:Exit()
 endfunction
 
 command! StartPresenting call s:Start()
 command! PresentingStart call s:Start()
-" }}}
 
-" Functions for Navigation {{{
+" Functions for Navigation {{{1
 function! s:ShowPage(page_no)
-  if a:page_no < 0
+  if a:page_no < 0 || a:page_no >= len(b:pages)
     return
   endif
-  if len(s:pages) < a:page_no+1
-    return
-  endif
-  let s:page_number = a:page_no
+  let b:page_number = a:page_no
 
   " replace content of buffer with the next page
-  setlocal noreadonly
-  setlocal modifiable
+  setlocal noreadonly modifiable
   " avoid "--No lines in buffer--" msg by using silent
   silent %delete _
-  call append(0, s:pages[s:page_number])
+  call append(0, b:pages[b:page_number])
   call append(0, map(range(1,g:presenting_top_margin), '""'))
   execute ":normal! gg"
   call append(line('$'), map(range(1,winheight('%')-(line('w$')-line('w0')+1)), '""'))
+  setlocal readonly nomodifiable
 
-  " some options for the buffer
-  setlocal buftype=nofile
-  setlocal cmdheight=1
-  setlocal nocursorcolumn
-  setlocal nocursorline
-  setlocal nofoldenable
-  setlocal nomodifiable
-  setlocal nonumber
-  setlocal norelativenumber
-  setlocal noswapfile
-  setlocal readonly
-  setlocal wrap
-  setlocal linebreak
-  setlocal breakindent
-  setlocal nolist
-  let s:showtabline = &showtabline
-  set showtabline=0
   call s:UpdateStatusLine()
 
   " move cursor to the top
@@ -112,43 +94,29 @@ function! s:ShowPage(page_no)
 endfunction
 
 function! s:NextPage(count)
-  let s:page_number += a:count
-  if s:page_number > s:max_page_number
-    let s:page_number = s:max_page_number
-  endif
-  call s:ShowPage(s:page_number)
+  let b:page_number = min([b:page_number+a:count, b:max_page_number])
+  call s:ShowPage(b:page_number)
 endfunction
 
 function! s:PrevPage(count)
-  let s:page_number -= a:count
-  if s:page_number < 0
-    let s:page_number = 0
-  endif
-  call s:ShowPage(s:page_number)
+  let b:page_number = max([b:page_number-a:count, 0])
+  call s:ShowPage(b:page_number)
 endfunction
 
 function! s:Exit()
-  if exists('g:presenting_vim_running')
-    unlet g:presenting_vim_running
-    bdelete! _SLIDE_
-    let &showtabline = s:showtabline
-  endif
+  bwipeout!
 endfunction
 
 function! s:UpdateStatusLine()
-  let b:presenting_page_current = s:page_number + 1
-  let b:presenting_page_total = len(s:pages)
+  let b:presenting_page_current = b:page_number + 1
+  let b:presenting_page_total = len(b:pages)
   let &l:statusline = g:presenting_statusline
 endfunction
 
-" Functions for Navigation }}}
-
-" Parsing & Formatting {{{
+" Parsing & Formatting {{{1
 function! s:Parse()
-  " filetype specific separator
-  let l:sep = exists('b:presenting_slide_separator') ? b:presenting_slide_separator : s:presenting_slide_separator
-  let s:pages = map(split(join(getline(1, '$'), "\n"), l:sep), 'split(v:val, "\n")')
-  let s:max_page_number = len(s:pages) - 1
+  let l:sep = exists('b:presenting_slide_separator') ? b:presenting_slide_separator : b:presenting_slide_separator_default
+  return map(split(join(getline(1, '$'), "\n"), l:sep), 'split(v:val, "\n")')
 endfunction
 
 function! s:Format()
