@@ -27,12 +27,13 @@ function! s:Start()
 
   " Parse the document into pages
   let l:pages = s:Parse()
-  call s:Format()
 
   if empty(l:pages)
     echo "No page detected!"
     return
   endif
+
+  let l:pages = s:Format(l:pages, l:filetype)
 
   " avoid '"_SLIDE_" [New File]' msg by using silent
   execute 'silent tabedit _SLIDE_'.localtime().'_'
@@ -119,28 +120,29 @@ function! s:Parse()
   return map(split(join(getline(1, '$'), "\n"), l:sep), 'split(v:val, "\n")')
 endfunction
 
-function! s:Format()
-  " The {s:filetype}#format() autoload function processes one line of
+function! s:Format(pages, filetype)
+  " The {a:filetype}#format() autoload function processes one line of
   " text at a time. Some lines may depend on a prior line, such as
   " numbering and indenting numbered lists. This state information is
-  " passed into {s:filetyepe}#format() through the state Dictionary
+  " passed into {a:filetyepe}#format() through the state Dictionary
   " variable. The function will use it however it needs to. s:Format()
   " doesn't care how it's used, but must keep the state variable intact
   " for each successive call to the autoload function.
   let state = {}
 
   try
-    for i in range(0,len(s:pages)-1)
+    for i in range(0,len(a:pages)-1)
       let replacement_page = []
-      for j in range(0, len(s:pages[i])-1)
-        let [new_text, state] = {s:filetype}#format(s:pages[i][j], state)
+      for j in range(0, len(a:pages[i])-1)
+        let [new_text, state] = {a:filetype}#format(a:pages[i][j], state)
         let replacement_page += new_text
       endfor
-      let s:pages[i] = replacement_page
+      let a:pages[i] = replacement_page
     endfor
   catch /E117/
-    echo 'Auto load function '.s:filetype.'#format(text, state) does not exist.'
+    echo 'Auto load function '.a:filetype.'#format(text, state) does not exist.'
   endtry
+  return a:pages
 endfunction
 
 " }}}
