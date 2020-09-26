@@ -52,6 +52,10 @@ When you want to start presenting, execute
 :PresentingStart
 ```
 
+It is possible to have multiple presentations running at the same time. Just
+run the command in each source document, and each slide show will be
+displayed in its own tab.
+
 Once presenting, slide navigation is accomplished via these keys:
 
 | Key | Action         |
