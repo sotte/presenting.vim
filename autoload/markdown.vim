@@ -8,7 +8,6 @@
 " implemented, the filetype of the original file (markdown in this case) will
 " be used.
 
-
 function! markdown#set_filetype()
   set filetype=presenting_markdown
 endfunction
@@ -78,7 +77,7 @@ function! markdown#format(text, state)
 endfunction
 
 function! s:InitializeState(state)
-  return extend(a:state, #{bullet_nums:[0], in_code_block:0, indent:0}, 'keep')
+  return extend(a:state, {'bullet_nums':[0], 'in_code_block':0, 'indent':0}, 'keep')
 endfunction
 
 " vim:ts=2:sw=2:expandtab
