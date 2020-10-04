@@ -1,5 +1,5 @@
 # presenting.vim
-### created by Stefan Otte
+### maintainer: Stefan Otte
 
 
 #### a presentation tool
@@ -7,9 +7,10 @@
 
 # Usage
 
-- Each # or ## header starts a new slide.
-- All #, ##, and ### headers are rendered with [figlet][1], if installed.
-- All #, ##, ###, and #### headers are centered horizontally.
+- Each # or ## heading starts a new slide.
+- All #, ##, and ### headings are rendered with [figlet][1], if installed.
+- All #, ##, ###, and #### headings are centered horizontally.
+- **Bold** __text__ and *italicized* _text_ are highlighted according to the built-in markdown syntax rules.
 
   [1]: http://www.figlet.org/
 
@@ -27,15 +28,26 @@ Navigation:
 
 # Lists / Nested Outline
 
-Ordered, bulleted, and To Do lists are nicely rendered.
+Lists can be numbered, bulleted, or To Do list items. As a reminder, here is the markup for each type of list.
+
+```
+* bulleted item
+- bulleted item
+
+1. numbered item
+    1. numbered sub-item
+
+- [ ] unchecked item
+- [x] checked item
+```
 ## Ordered
 
 Numbers are recalculated and incremented properly.
 
 1. First
-   1. Part a
-   1. Part b
-1. Second
+   2. Part a
+   3. Part b
+4. Second
 
 ## Unordered
 
@@ -47,12 +59,14 @@ Bullets are rendered with a Unicode bullet operator.
    - sourdough
 - eggs
 
-## Checkboxes
+## Checkboxes / To-Do Lists
 
 Checkboxes are rendered with Unicode as either unchecked or checked boxes.
 
 - [ ] Not done yet
 - [x] Done
+
+These are part of Github-flavored Markdown, not the offical Markdown specification.
 
 # Word Wrapping / Quotes
 
