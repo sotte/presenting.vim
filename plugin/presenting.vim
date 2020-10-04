@@ -62,7 +62,6 @@ function! s:Start()
   endtry
 
   call s:ShowPage(0)
-  call s:UpdateStatusLine()
 
   " commands for the navigation
   command! -buffer -count=1 PresentingNext call s:NextPage(<count>)
@@ -84,6 +83,7 @@ function! s:ShowPage(page_no)
     return
   endif
   let b:page_number = a:page_no
+  call s:UpdateStatusLine()
 
   " replace content of buffer with the next page
   setlocal noreadonly modifiable
@@ -94,8 +94,6 @@ function! s:ShowPage(page_no)
   execute ":normal! gg"
   call append(line('$'), map(range(1,winheight('%')-(line('w$')-line('w0')+1)), '""'))
   setlocal readonly nomodifiable
-
-  call s:UpdateStatusLine()
 
   " move cursor to the top
   execute ":normal! gg"
