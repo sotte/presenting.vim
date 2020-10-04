@@ -1,11 +1,5 @@
 " presenting.vim - presentation for vim
 
-au FileType markdown let b:presenting_slide_separator_default = '\v(^|\n)\ze#{1,2}[^#]'
-au FileType mkd      let b:presenting_slide_separator_default = '\v(^|\n)\ze#+'
-au FileType org      let b:presenting_slide_separator_default = '\v(^|\n)#-{4,}'
-au FileType rst      let b:presenting_slide_separator_default = '\v(^|\n)\~{4,}'
-au FileType slide    let b:presenting_slide_separator_default = '\v(^|\n)\ze\*'
-
 let g:presenting_statusline = get(g:, 'presenting_statusline', '%{b:presenting_page_current}/%{b:presenting_page_total}')
 let g:presenting_top_margin = get(g:, 'presenting_top_margin', 0)
 let g:presenting_next = get(g:, 'presenting_next', 'n')
