@@ -90,12 +90,9 @@ function! s:ShowPage(page_no)
   silent %delete _
   call append(0, b:pages[b:page_number])
   call append(0, map(range(1,g:presenting_top_margin), '""'))
-  execute ":normal! gg"
+  normal! gg
   call append(line('$'), map(range(1,winheight('%')-(line('w$')-line('w0')+1)), '""'))
   setlocal readonly nomodifiable
-
-  " move cursor to the top
-  execute ":normal! gg"
 endfunction
 
 function! s:NextPage(count)
