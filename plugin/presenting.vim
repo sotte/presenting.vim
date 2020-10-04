@@ -18,6 +18,9 @@ let g:presenting_font_small = get(g:, 'presenting_font_small', 'straight')
 
 let s:presenting_id = 0
 
+command! StartPresenting call s:Start()
+command! PresentingStart call s:Start()
+
 " Main logic / start the presentation {{{1
 function! s:Start()
   " make sure we can parse the current filetype
@@ -63,19 +66,15 @@ function! s:Start()
 
   call s:ShowPage(0)
 
-  " commands for the navigation
+  " commands and mappings for navigation
   command! -buffer -count=1 PresentingNext call s:NextPage(<count>)
   command! -buffer -count=1 PresentingPrev call s:PrevPage(<count>)
   command! -buffer PresentingExit call s:Exit()
 
-  " mappings for the navigation
   execute 'nnoremap <buffer> <silent> ' . g:presenting_next . ' :PresentingNext<CR>'
   execute 'nnoremap <buffer> <silent> ' . g:presenting_prev . ' :PresentingPrev<CR>'
   execute 'nnoremap <buffer> <silent> ' . g:presenting_quit . ' :PresentingExit<CR>'
 endfunction
-
-command! StartPresenting call s:Start()
-command! PresentingStart call s:Start()
 
 " Functions for Navigation {{{1
 function! s:ShowPage(page_no)
