@@ -10,7 +10,7 @@ syntax match presentingH4 /^#4.*/ contains=presentingHeadingDelimiter
 syntax match presentingOrderedListMarker /^\s*\d\+\./
 syntax match presentingListMarker /^\s*∙/
 syntax match presentingCheckboxMarker /^\s*[☐☑︎]/
-syntax match presentingCodeDelimiter /━/
+syntax match presentingCodeDelimiter /━/ containedin=markdownCodeBlock
 syntax match presentingBlockQuote /┃/
 
 highlight default link presentingH1 markdownH1
