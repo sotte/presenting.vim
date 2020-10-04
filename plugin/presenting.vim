@@ -16,6 +16,8 @@ let g:presenting_figlets = get(g:, 'presenting_figlets', 1)
 let g:presenting_font_large = get(g:, 'presenting_font_large', 'small')
 let g:presenting_font_small = get(g:, 'presenting_font_small', 'straight')
 
+let s:presenting_id = 0
+
 " Main logic / start the presentation {{{1
 function! s:Start()
   " make sure we can parse the current filetype
@@ -35,8 +37,8 @@ function! s:Start()
 
   let l:pages = s:Format(l:pages, l:filetype)
 
-  " avoid '"_SLIDE_" [New File]' msg by using silent
-  execute 'silent tabedit _SLIDE_'.localtime().'_'
+  let s:presenting_id += 1
+  execute 'silent tabedit _SHOW_'.s:presenting_id.'_'
   let b:pages = l:pages
   let b:page_number = 0
   let b:max_page_number = len(b:pages) - 1
