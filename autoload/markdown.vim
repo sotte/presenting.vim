@@ -13,7 +13,8 @@ function! markdown#set_filetype()
 endfunction
 
 function! markdown#format(text, state)
-  let l:state = s:InitializeState(a:state)
+  " Initialize the state variable with defaults, if missing.
+  let l:state = extend(a:state, {'bullet_nums':[0], 'in_code_block':0, 'indent':0}, 'keep')
 
   if a:text =~? '^\s*```' " Wrap code blocks with a horzontal line
     let l:state.in_code_block = !l:state.in_code_block
@@ -74,10 +75,6 @@ function! markdown#format(text, state)
   endif
 
   return [new_text, l:state]
-endfunction
-
-function! s:InitializeState(state)
-  return extend(a:state, {'bullet_nums':[0], 'in_code_block':0, 'indent':0}, 'keep')
 endfunction
 
 " vim:ts=2:sw=2:expandtab
