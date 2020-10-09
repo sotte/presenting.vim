@@ -2,15 +2,6 @@
 " filetypes. (This particular one is for markdown files.) These modules
 " must implement the ...#format() function. See the comment in
 " plugin/presenting.vim's s:Format() function for details.
-"
-" The ...#set_filetype() function can optionally be implemented here as well.
-" Its purpose is to set the filetype of the slide show buffer. If not
-" implemented, the filetype of the original file (markdown in this case) will
-" be used.
-
-function! markdown#set_filetype()
-  set filetype=presenting_markdown
-endfunction
 
 function! markdown#format(text, state)
   " Initialize the state variable with defaults, if missing.

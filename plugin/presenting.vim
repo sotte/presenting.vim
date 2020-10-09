@@ -60,7 +60,7 @@ function! s:Start()
   setlocal nolist
 
   try
-    call {l:filetype}#set_filetype()
+    execute 'set filetype=presenting_'.l:filetype
   catch /E117/
     let &filetype=l:filetype
   endtry
