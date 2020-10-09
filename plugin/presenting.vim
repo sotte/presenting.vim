@@ -58,6 +58,7 @@ function! s:Start()
   setlocal linebreak
   setlocal breakindent
   setlocal nolist
+  setlocal signcolumn=no
 
   try
     execute 'set filetype=presenting_'.l:filetype
