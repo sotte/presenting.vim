@@ -72,6 +72,11 @@ function! s:Start()
   command! -buffer -count=1 PresentingPrev call s:PrevPage(<count>)
   command! -buffer PresentingExit call s:Exit()
 
+  " Remap <Esc>[ to itself to prevent bad behavior when, for example, <Esc> is used
+  " for Quit and arrow keys are used for Next/Prev.
+  " See https://stackoverflow.com/a/20458579/510067 for an explanation.
+  nnoremap <buffer> <silent> <Esc>[ <Esc>[
+
   execute 'nnoremap <buffer> <silent> ' . g:presenting_next . ' :PresentingNext<CR>'
   execute 'nnoremap <buffer> <silent> ' . g:presenting_prev . ' :PresentingPrev<CR>'
   execute 'nnoremap <buffer> <silent> ' . g:presenting_quit . ' :PresentingExit<CR>'
