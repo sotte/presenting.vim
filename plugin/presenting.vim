@@ -142,7 +142,11 @@ function! s:Format(pages, filetype)
       let replacement_page = []
       for j in range(0, len(a:pages[i])-1)
         let [new_text, state] = {a:filetype}#format(a:pages[i][j], state)
-        let replacement_page += new_text
+        if type(new_text) == type([])
+          let replacement_page += new_text
+        else
+          let replacement_page += [new_text]
+        endif
       endfor
       let a:pages[i] = replacement_page
     endfor

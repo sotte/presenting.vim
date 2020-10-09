@@ -9,19 +9,19 @@ function! markdown#format(text, state)
 
   if a:text =~? '^\s*```' " Wrap code blocks with a horzontal line
     let l:state.in_code_block = !l:state.in_code_block
-    let new_text = ['    '.repeat('━', winwidth(0)-8)]
+    let new_text = '    '.repeat('━', winwidth(0)-8)
 
   elseif l:state.in_code_block " Indent code block contents
-    let new_text = ['    '.a:text]
+    let new_text = '    '.a:text
 
   elseif a:text =~? '^[*-] \[ \]' " Unchecked Box
-    let new_text = [substitute(a:text,  '^[*-] \[ \]', '☐', '')]
+    let new_text = substitute(a:text,  '^[*-] \[ \]', '☐', '')
 
   elseif a:text =~? '^[*-] \[x\]' " Checked Box
-    let new_text = [substitute(a:text,  '^[*-] \[x\]', '☑︎', '')]
+    let new_text = substitute(a:text,  '^[*-] \[x\]', '☑︎', '')
 
   elseif a:text =~? '^\s*[*-]' " Bulleted Lists
-    let new_text = [substitute(a:text, '^\s*\zs[*-] ', '∙ ', '')]
+    let new_text = substitute(a:text, '^\s*\zs[*-] ', '∙ ', '')
 
   elseif a:text =~? '^\s*\d\+\.' " Numbered Lists
     if match(a:text, '\s*\zs\d\+\.') > l:state.indent
@@ -31,7 +31,7 @@ function! markdown#format(text, state)
     endif
     let l:state.indent = match(a:text, '\s*\zs\d\+\.')
     let l:state.bullet_nums[-1] += 1
-    let new_text = [substitute(a:text, '^\s*\zs\d\+', l:state.bullet_nums[-1], '')]
+    let new_text = substitute(a:text, '^\s*\zs\d\+', l:state.bullet_nums[-1], '')
 
   elseif a:text =~? '^#\{1,3}[^#]' && g:presenting_figlets && executable('figlet') " Replace h1, h2 and h3 text with figlets
     let level = strchars(matchstr(a:text, '^#\+'))
@@ -44,7 +44,7 @@ function! markdown#format(text, state)
   elseif a:text =~? '^#\{1,4}[^#]' " Center h4 text (and h1-h3 if no figlets) on the window.
     let level = strchars(matchstr(a:text, '^#\+'))
     let l:text = substitute(a:text,'^#\+s*','','')
-    let new_text = ['#'.level.repeat(' ', (winwidth(0)-strchars(l:text))/2) . l:text]
+    let new_text = '#'.level.repeat(' ', (winwidth(0)-strchars(l:text))/2) . l:text
 
   elseif a:text =~? '^\s*>' " Wrap and prefix quoted blocks.
     let new_text = []
@@ -57,7 +57,7 @@ function! markdown#format(text, state)
     let new_text += ['  ┃ '.l:text]
 
   else " Return the text as is.
-    let new_text = [a:text]
+    let new_text = a:text
 
   endif
 
