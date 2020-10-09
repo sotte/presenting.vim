@@ -12,6 +12,13 @@ let g:presenting_font_small = get(g:, 'presenting_font_small', 'straight')
 
 let s:presenting_id = 0
 
+let s:showtabline = &showtabline
+augroup PresentingToggleTabline
+  autocmd!
+  autocmd BufEnter _SHOW_*_ set showtabline=0
+  autocmd BufLeave _SHOW_*_ let &showtabline=s:showtabline
+augroup END
+
 command! StartPresenting call s:Start()
 command! PresentingStart call s:Start()
 
