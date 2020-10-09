@@ -5,6 +5,9 @@
 #### a presentation tool
 #### for vim
 
+// This is a comment that won't be presented. Comments are
+// an entire line starting with //, and no leading spaces.
+
 # Usage
 
 - Each # or ## heading starts a new slide.

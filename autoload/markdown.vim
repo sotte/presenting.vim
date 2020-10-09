@@ -7,7 +7,10 @@ function! markdown#format(text, state)
   " Initialize the state variable with defaults, if missing.
   let l:state = extend(a:state, {'bullet_nums':[0], 'in_code_block':0, 'indent':0}, 'keep')
 
-  if a:text =~? '^\s*```' " Wrap code blocks with a horzontal line
+  if a:text =~? '^//' " Remove comments from the slide before presenting.
+    let new_text = []
+
+  elseif a:text =~? '^\s*```' " Wrap code blocks with a horzontal line
     let l:state.in_code_block = !l:state.in_code_block
     let new_text = '    '.repeat('━', winwidth(0)-8)
 
