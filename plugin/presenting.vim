@@ -147,7 +147,7 @@ function! s:Format(pages, filetype)
       let a:pages[i] = replacement_page
     endfor
   catch /E117/
-    echo 'Auto load function '.a:filetype.'#format(text, state) does not exist.'
+    " No autoload function. Slide show will have no formatting.
   endtry
   return a:pages
 endfunction
