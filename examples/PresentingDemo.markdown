@@ -5,8 +5,10 @@
 #### a presentation tool
 #### for vim
 
-// This is a comment that won't be presented. Comments are
-// an entire line starting with //, and no leading spaces.
+<!--
+  Comments are removed. They must
+  be in the HTML comment tag.
+-->
 
 # Usage
 
