@@ -9,7 +9,7 @@ syntax match presentingH3 /^#3.*/ contains=presentingHeadingDelimiter
 syntax match presentingH4 /^#4.*/ contains=presentingHeadingDelimiter
 syntax match presentingOrderedListMarker /^\s*\d\+\./
 syntax match presentingListMarker /^\s*∙/
-syntax match presentingCheckboxMarker /^\s*[☐☑︎]/
+syntax match presentingCheckboxMarker /^\s*[■□]/
 syntax match presentingCodeDelimiter /━/ containedin=markdownCodeBlock
 syntax match presentingBlockQuote /┃/
 

@@ -64,7 +64,7 @@ Bullets are rendered with a Unicode bullet operator.
 
 ## Checkboxes / To-Do Lists
 
-Checkboxes are rendered with Unicode as either unchecked or checked boxes.
+Checkboxes are rendered with Unicode as either empty or filled squares.
 
 - [ ] Not done yet
 - [x] Done
