@@ -60,11 +60,11 @@ function! s:Start()
   setlocal nolist
   setlocal signcolumn=no
 
-  try
-    execute 'set filetype=presenting_'.l:filetype
-  catch /E117/
+  if globpath(&rtp, 'syntax/presenting_'.l:filetype.'.vim') == ''
     let &filetype=l:filetype
-  endtry
+  else
+    let &filetype='presenting_'.l:filetype
+  endif
 
   call s:ShowPage(0)
 
