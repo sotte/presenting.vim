@@ -18,10 +18,10 @@ function! markdown#format(text, state)
     let new_text = '    '.a:text
 
   elseif a:text =~? '^[*-] \[ \]' " Unchecked Box
-    let new_text = substitute(a:text,  '^[*-] \[ \]', '☐', '')
+    let new_text = substitute(a:text,  '^[*-] \[ \]', '□', '')
 
   elseif a:text =~? '^[*-] \[x\]' " Checked Box
-    let new_text = substitute(a:text,  '^[*-] \[x\]', '☑︎', '')
+    let new_text = substitute(a:text,  '^[*-] \[x\]', '■', '')
 
   elseif a:text =~? '^\s*[*-]' " Bulleted Lists
     let new_text = substitute(a:text, '^\s*\zs[*-] ', '∙ ', '')
