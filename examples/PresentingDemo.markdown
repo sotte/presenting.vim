@@ -13,13 +13,13 @@
 - Each # or ## heading starts a new slide.
 - All #, ##, and ### headings are rendered with [figlet][1], if installed.
 - All #, ##, ###, and #### headings are centered horizontally.
-- **Bold** __text__ and *italicized* _text_ are highlighted according to the built-in markdown syntax rules.
+- **Bold** __text__, *italicized* _text_, `inline code`, and [links](https://github.com/sotte/presenting.vim) are highlighted according to the built-in markdown syntax rules.
 
   [1]: http://www.figlet.org/
 
 Start presenting:
 
-```vim
+```
 :PresentingStart
 ```
 
