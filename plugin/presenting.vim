@@ -129,25 +129,27 @@ function! s:Parse()
 endfunction
 
 function! s:Format(pages, filetype)
-  " The {a:filetype}#format() autoload function processes one line of
-  " text at a time. Some lines may depend on a prior line, such as
-  " numbering and indenting numbered lists. This state information is
-  " passed into {a:filetyepe}#format() through the state Dictionary
-  " variable. The function will use it however it needs to. s:Format()
-  " doesn't care how it's used, but must keep the state variable intact
-  " for each successive call to the autoload function.
   let state = {}
 
   try
     for i in range(0,len(a:pages)-1)
       let replacement_page = []
       for j in range(0, len(a:pages[i])-1)
-        let [new_text, state] = {a:filetype}#format(a:pages[i][j], state)
-        if type(new_text) == type([])
-          let replacement_page += new_text
-        else
-          let replacement_page += [new_text]
-        endif
+
+        " The {a:filetype}#format() autoload function processes one line of
+        " text at a time. All implementations must have the function signature.
+        " Args:
+        " text (string): This is the current line of text being formatted.
+        " last_line (boolean): Flag to indicate if this is the last line of
+        "     text on the slide
+        " state (dictionary): Some lines may depend on a prior line, such as
+        "     numbering and indenting numbered lists. This state information
+        "     is passed into {a:filetyepe}#format() through this variable.
+        "     The function will use it however it needs to. s:Format() doesn't
+        "     care how it's used, but must keep the state variable intact for
+        "     each successive call to the autoload function.
+        let [new_text, state] = {a:filetype}#format(a:pages[i][j], j == len(a:pages[i])-1, state)
+        let replacement_page += new_text
       endfor
       let a:pages[i] = replacement_page
     endfor
