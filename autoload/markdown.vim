@@ -5,38 +5,54 @@
 
 function! markdown#format(text, state)
   " Initialize the state variable with defaults, if missing.
-  let l:state = extend(a:state, {'in_comment':0, 'in_code':0, 'bullet_nums':[0], 'indent':0}, 'keep')
+  let l:state = extend(a:state, {'comment':0, 'code':0, 'bullet_nums':[0], 'indent':0, 'table':[]}, 'keep')
+  let new_text = []
 
-  if a:text =~? '<!--'    " Start of comment
-    let new_text = substitute(a:text, '<!--.\{-}\($\|-->\)','','')
-    let new_text = new_text == '' ? [] : new_text
-    let l:state.in_comment = a:text !~? '-->'
 
-  elseif a:text =~? '-->'    " End of comment
-    let new_text = substitute(a:text, '.*-->','','')
-    let new_text = new_text == '' ? [] : new_text
-    let l:state.in_comment = 0
+  " Remove commented lines.
+  if a:text =~? '<!--'
+    let uncommented = substitute(a:text, '<!--.\{-}\($\|-->\)','','')
+    if uncommented != ''
+      let new_text += [uncommented]
+    endif
+    let l:state.comment = a:text !~? '-->'
 
-  elseif l:state.in_comment    " Full-line interior of comment
-    let new_text = []
+  elseif a:text =~? '-->'
+    let uncommented = substitute(a:text, '.*-->','','')
+    if uncommented != ''
+      let new_text += [uncommented]
+    endif
+    let l:state.comment = 0
 
-  elseif a:text =~? '^\s*```'    " Wrap code blocks with a horzontal line
-    let l:state.in_code = !l:state.in_code
-    let new_text = '    '.repeat('━', winwidth(0)-8)
+  elseif l:state.comment
+    " Do nothing. new_text is already set to [].
 
-  elseif l:state.in_code    " Indent code block contents
-    let new_text = '    '.a:text
 
-  elseif a:text =~? '^[*-] \[ \]'    " Unchecked Box
-    let new_text = substitute(a:text,  '^[*-] \[ \]', '□', '')
 
-  elseif a:text =~? '^[*-] \[x\]'    " Checked Box
-    let new_text = substitute(a:text,  '^[*-] \[x\]', '■', '')
+  " Code Blocks - Indent. Precede and follow with horzontal line
+  elseif a:text =~? '^\s*```'
+    let l:state.code = !l:state.code
+    let new_text += ['    '.repeat('━', winwidth(0)-8)]
 
-  elseif a:text =~? '^\s*[*-]'    " Bulleted Lists
-    let new_text = substitute(a:text, '^\s*\zs[*-] ', '∙ ', '')
+  elseif l:state.code
+    let new_text += ['    '.a:text]
 
-  elseif a:text =~? '^\s*\d\+\.'    " Numbered Lists
+
+  " Checkboxes - Replace with Unicode squares
+  elseif a:text =~? '^[*-] \[ \]'
+    let new_text += [substitute(a:text,  '^[*-] \[ \]', '□', '')]
+
+  elseif a:text =~? '^[*-] \[x\]'
+    let new_text += [substitute(a:text,  '^[*-] \[x\]', '■', '')]
+
+
+  " Bullet Lists - Replace with Unicode bullet
+  elseif a:text =~? '^\s*[*-]'
+    let new_text += [substitute(a:text, '^\s*\zs[*-] ', '∙ ', '')]
+
+
+  " Numbered Lists - Renumber, with indentation
+  elseif a:text =~? '^\s*\d\+\.'
     if match(a:text, '\s*\zs\d\+\.') > l:state.indent
       let l:state.bullet_nums += [0]
     elseif match(a:text, '\s*\zs\d\+\.') < l:state.indent
@@ -44,23 +60,23 @@ function! markdown#format(text, state)
     endif
     let l:state.indent = match(a:text, '\s*\zs\d\+\.')
     let l:state.bullet_nums[-1] += 1
-    let new_text = substitute(a:text, '^\s*\zs\d\+', l:state.bullet_nums[-1], '')
+    let new_text += [substitute(a:text, '^\s*\zs\d\+', l:state.bullet_nums[-1], '')]
 
-  elseif a:text =~? '^#\{1,3}[^#]' && g:presenting_figlets && executable('figlet')    " Replace h1, h2 and h3 text with figlets
+
+  " Headings - Centered Figlets for #, ##, and ###
+  elseif a:text =~? '^#\{1,3}[^#]' && g:presenting_figlets && executable('figlet')
     let level = strchars(matchstr(a:text, '^#\+'))
     let font = level == 1 ? g:presenting_font_large : g:presenting_font_small
-    let new_text = split(system('figlet -w '.winwidth(0).' -f '.font.' '.shellescape(substitute(a:text,'^#\+s*','',''))), "\n")
+    let figlet = split(system('figlet -w '.winwidth(0).' -f '.font.' '.shellescape(substitute(a:text,'^#\+s*','',''))), "\n")
+    let new_text += s:Center(figlet, '#'.level)
 
-    let w = max(map(copy(new_text), 'strchars(v:val)'))
-    call map(new_text, '"#".level.repeat(" ",(winwidth(0)-w)/2).v:val')
+  " Headings - Centered Normal Text for ####
+  elseif a:text =~? '^####[^#]'
+    let new_text += s:Center([substitute(a:text,'^####\s*','','')], '#4')
 
-  elseif a:text =~? '^#\{1,4}[^#]'    " Center h4 text (and h1-h3 if no figlets) on the window.
-    let level = strchars(matchstr(a:text, '^#\+'))
-    let l:text = substitute(a:text,'^#\+s*','','')
-    let new_text = '#'.level.repeat(' ', (winwidth(0)-strchars(l:text))/2) . l:text
 
-  elseif a:text =~? '^\s*>'    " Wrap and prefix quoted blocks.
-    let new_text = []
+  " Quote Blocks - Wrap and Left Border
+  elseif a:text =~? '^\s*>'
     let l:text = substitute(a:text, '^\s*>\s*', '', '')
     while strchars(l:text) > winwidth(0) - 8
       let s = strridx(strcharpart(l:text,0,winwidth(0)-10),' ')
@@ -69,16 +85,25 @@ function! markdown#format(text, state)
     endwhile
     let new_text += ['  ┃ '.l:text]
 
-  else " Return the text as is.
-    let new_text = a:text
+
+  " Return text as is.
+  else
+    let new_text += [a:text]
 
   endif
 
-  if a:text !~? '^\s*\d\+\.' " Reset bullet number
+  " Reset bullet number on unnumbered lines.
+  if a:text !~? '^\s*\d\+\.'
     let l:state.bullet_nums = [0]
   endif
 
   return [new_text, l:state]
+endfunction
+
+function! s:Center(text, prefix)
+  let max_width = max(map(copy(a:text), 'strchars(v:val)'))
+  let centered = map(copy(a:text), 'a:prefix.repeat(" ",(winwidth(0)-max_width)/2).v:val')
+  return centered
 endfunction
 
 " vim:ts=2:sw=2:expandtab
