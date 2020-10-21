@@ -3,10 +3,17 @@
 " must implement the ...#format() function. See the comment in
 " plugin/presenting.vim's s:Format() function for details.
 
-function! markdown#format(text, state)
+function! markdown#format(text, last_line, state)
   " Initialize the state variable with defaults, if missing.
   let l:state = extend(a:state, {'comment':0, 'code':0, 'bullet_nums':[0], 'indent':0, 'table':[]}, 'keep')
   let new_text = []
+
+
+  " Finish a table. We don't know it's done until processing the next line.
+  if a:text !~? '\s*|\([^|]\+|\)\+$' && l:state.table != []
+    let new_text += s:FinishTable(l:state.table)
+    let l:state.table = []
+  endif
 
 
   " Remove commented lines.
@@ -27,6 +34,21 @@ function! markdown#format(text, state)
   elseif l:state.comment
     " Do nothing. new_text is already set to [].
 
+
+  " Tables - Render with box drawing characters.
+  elseif a:text =~? '\s*|\([^|]\+|\)\+$'
+    if l:state.table == []
+      let l:state.table = [
+        \ substitute(substitute(substitute(substitute(a:text, '^\s*|', '┌', ''), '|\s*$', '┐', ''), '|', '┬', 'g'), '[^┌┐┬]', '─', 'g'),
+        \ substitute(a:text, '|', '│', 'g') . 'TH'
+      \ ]
+    elseif a:text =~? '\s*|\(-\+|\)\+$'
+      let l:state.table += [
+        \ substitute(substitute(substitute(substitute(a:text, '^\s*|', '├', ''), '|\s*$', '┤', ''), '|', '┼', 'g'), '-', '─', 'g')
+      \ ]
+    else
+      let l:state.table += [substitute(a:text, '|', '│', 'g') . 'TR']
+    endif
 
 
   " Code Blocks - Indent. Precede and follow with horzontal line
@@ -92,6 +114,12 @@ function! markdown#format(text, state)
 
   endif
 
+  " Finish the table if it's the last thing on the slide.
+  if a:last_line && l:state.table != []
+    let new_text += s:FinishTable(l:state.table)
+    let l:state.table = []
+  endif
+
   " Reset bullet number on unnumbered lines.
   if a:text !~? '^\s*\d\+\.'
     let l:state.bullet_nums = [0]
@@ -104,6 +132,11 @@ function! s:Center(text, prefix)
   let max_width = max(map(copy(a:text), 'strchars(v:val)'))
   let centered = map(copy(a:text), 'a:prefix.repeat(" ",(winwidth(0)-max_width)/2).v:val')
   return centered
+endfunction
+
+function! s:FinishTable(text)
+  let l:text = extend(a:text, [ substitute( substitute( substitute(a:text[0], '┌', '└', ''), '┐', '┘', ''), '┬', '┴', 'g') ] )
+  return s:Center(l:text, '')
 endfunction
 
 " vim:ts=2:sw=2:expandtab
