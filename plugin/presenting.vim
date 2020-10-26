@@ -24,8 +24,11 @@ command! PresentingStart call s:Start()
 
 " Main logic / start the presentation {{{1
 function! s:Start()
+
+  " Prevent vimwiki taking control of the presentation's syntax highlighting.
+  let l:filetype = (&filetype == 'vimwiki') ? 'markdown' : &filetype
+
   " make sure we can parse the current filetype
-  let l:filetype = &filetype
   if !exists('b:presenting_slide_separator') && !exists('b:presenting_slide_separator_default')
     echom "set b:presenting_slide_separator for \"" . l:filetype . "\" filetype to enable Presenting.vim"
     return
