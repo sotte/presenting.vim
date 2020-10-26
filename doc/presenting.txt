@@ -137,14 +137,15 @@ Headings can be rendered by using the figlets program if it is installed. This
 is on by default, and can be turned off by setting >
   :let g:presenting_figlets = 0
 >
-The default figlet font for`#`headings is "small", and for`##`and`###`
-headings,is "straight", shown here:  >
-                     _ _
-       ____ __  __ _| | |
-      (_-< '  \/ _` | | |        _|_ _ _ . _ |_ |_
-      /__/_|_|_\__,_|_|_|       _)|_| (_||(_)| )|_
-                                          _/
+The default figlet font for`#`headings is "standard", and for`##`and`###`
+headings,is "small", shown here:  >
+       _                  _               _
+   ___| |_ __ _ _ __   __| | __ _ _ __ __| |                    _ _
+  / __| __/ _` | '_ \ / _` |/ _` | '__/ _` |      ____ __  __ _| | |
+  \__ \ || (_| | | | | (_| | (_| | | | (_| |     (_-< '  \/ _` | | |
+  |___/\__\__,_|_| |_|\__,_|\__,_|_|  \__,_|     /__/_|_|_\__,_|_|_|
 <
+
 These fonts can be changed with the the following variables: >
   :let g:presenting_font_large = 'big'
   :let g:presenting_font_small = 'mini'
