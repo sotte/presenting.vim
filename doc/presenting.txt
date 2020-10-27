@@ -12,7 +12,7 @@ A simple tool for presenting slides in Vim based on text files.
 Version: 0.1.0
 
 ==============================================================================
-CONTENTS                                                 *presenting-contents*
+CONTENTS                                                   *presenting-contents*
 
   1. Introduction..........................|presenting_introduction|
   2. Usage.................................|presenting-usage|
@@ -22,7 +22,7 @@ CONTENTS                                                 *presenting-contents*
   6. License...............................|presenting-license|
 
 ==============================================================================
-INTRODUCTION                                         *presenting-introduction*
+INTRODUCTION                                           *presenting-introduction*
 
 presenting.vim is a simple tool for presenting slides in Vim based on text files.
 It is a clone of https://github.com/pct/present.vim
@@ -32,7 +32,7 @@ In contrast to its predecessors presenting.vim has support for a number of
 markup languages, can be extended, and is documented. Great, hey?
 
 ==============================================================================
-USAGE                                                       *presenting-usage*
+USAGE                                                         *presenting-usage*
 
 You write you presentation in your favorite markup language.
 Every slide is separated by a markup language specific marker:
@@ -75,18 +75,23 @@ RST supports python by default:
 <
 
 ==============================================================================
-MAPPINGS                                                 *presenting-mappings*
+MAPPINGS                                                   *presenting-mappings*
 
-In the presentation mode there are the following mapping:
+In the presentation mode there are the following mappings:
 
   q - quit presentation
   n - next slide
   p - previous slide
 
+These can be overridden, as shown in the following examples: >
+  :let g:presenting_quit = '<Esc>'
+  :let g:presenting_next = '<Space>'
+  :let g:presenting_prev = '<Left>'
+<
 ==============================================================================
-CONFIGURATION                                       *presenting-configuration*
+CONFIGURATION                                         *presenting-configuration*
 
-                                                 *presenting_slide_separators*
+                                                   *presenting_slide_separators*
 This option overrides the default regular expression that specifies the slide
 separators, or defines a separator for filetypes not supported by default.
 
@@ -99,7 +104,7 @@ Add your own filetype: >
   where '----' is the separator.
 
 ------------------------------------------------------------------------------
-                                                       *presenting_statusline*
+                                                         *presenting_statusline*
 This option allows you to customize the format of the statusline for the
 presentation buffer. See |statusline| for available fields.
 
@@ -117,27 +122,52 @@ Set the statusline to display cursor position: >
   :let g:presenting_statusline = '%l, %c'
 <
 ------------------------------------------------------------------------------
-                                                       *presenting_top_margin*
+                                                         *presenting_top_margin*
 This option lets you define the number of blank lines to insert above each
 slide. Default: 0
 >
   :let g:presenting_top_margin = 2
 <
+------------------------------------------------------------------------------
+                *presenting_figlets* *presenting_font_large* *presenting_font_small*
+
+Note: Currently, this applies only to Markdown files.
+
+Headings can be rendered by using the figlets program if it is installed. This
+is on by default, and can be turned off by setting >
+  :let g:presenting_figlets = 0
+>
+The default figlet font for`#`headings is "standard", and for`##`and`###`
+headings,is "small", shown here:  >
+       _                  _               _
+   ___| |_ __ _ _ __   __| | __ _ _ __ __| |                    _ _
+  / __| __/ _` | '_ \ / _` |/ _` | '__/ _` |      ____ __  __ _| | |
+  \__ \ || (_| | | | | (_| | (_| | | | (_| |     (_-< '  \/ _` | | |
+  |___/\__\__,_|_| |_|\__,_|\__,_|_|  \__,_|     /__/_|_|_\__,_|_|_|
+<
+
+These fonts can be changed with the the following variables: >
+  :let g:presenting_font_large = 'big'
+  :let g:presenting_font_small = 'mini'
+<
+More information about figlets can be found at https://figlet.org and the
+interactive website http://patorjk.com/software/taag can be used to test out
+the different fonts.
 
 ==============================================================================
-ISSUES                                                     *presenting-issues*
+ISSUES                                                       *presenting-issues*
 
 Having issues?
  * goto https://github.com/sotte/presenting.vim/issues
  * or, better, goto |presentingcontribute|
 
-Wanna contribute?                                      *presentingcontribute*
+Wanna contribute?                                         *presentingcontribute*
  * https://github.com/sotte/presenting.vim
 
 presenting.vim only uses vim-script.
 
 ==============================================================================
-LICENSE                                                   *presenting-license*
+LICENSE                                                     *presenting-license*
 
 presenting.vim is under the BEER-WARE LICENSE.
 

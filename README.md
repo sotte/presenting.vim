@@ -3,8 +3,6 @@
 **presenting.vim** is a vim plugin that turns your markup into presentable
 slides (in vim).
 
-![presentin.vim ascii demo](examples/demo.gif)
-
 It is a clone of [present.vim][1] which is a clone of [presen.vim][2]. In
 contrast to its predecessors, presenting.vim:
 
@@ -17,14 +15,23 @@ contrast to its predecessors, presenting.vim:
 
 Great, hey?
 
-# Installation
+## Demonstrations
+Here is what the `examples/PresentingDemo.rst` file looks like when presented.
+
+![presenting.vim RST demo](examples/demo.gif)
+
+Markdown files are rendered a bit more fancifully. Be sure to read the help file. Here is the `examples/PresentingDemo.markdown` being presented.
+
+![presenting.vim Markdown demo](examples/FancyMarkdown.gif)
+
+## Installation
 
 Use [pathogen][3] or [vundle][4] to install presenting.vim.
 
   [3]: https://github.com/tpope/vim-pathogen
   [4]: https://github.com/gmarik/vundle
 
-# Configuration
+## Configuration
 
 Simply write your presentation in your favorite markup language. Every slide
 is separated by a markup language specific marker.
@@ -45,7 +52,7 @@ separator to `~~~~` via:
 au FileType rst let b:presenting_slide_separator = '\v(^|\n)\~{4,}'
 ```
 
-# Usage
+## Usage
 
 When you want to start presenting, execute
 ```
@@ -64,7 +71,7 @@ Once presenting, slide navigation is accomplished via these keys:
 | `p` | previous slide |
 | `q` | quit           |
 
-# Examples
+## Examples
 
 For examples of presenting.vim presentations, see:
 
@@ -75,7 +82,7 @@ For examples of presenting.vim presentations, see:
 
 Of course you can configure the slide separators.
 
-# Contributing
+## Contributing
 
 The [code][5] and [issue tracker][6] are on github. Pull requests are welcome!
 
