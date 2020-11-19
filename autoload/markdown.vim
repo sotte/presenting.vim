@@ -39,38 +39,35 @@ function! markdown#format(text, last_line, state)
   elseif a:text =~? '\s*|\([^|]\+|\)\+$'
     if l:state.table == []
       let l:state.table = [
-        \ substitute(substitute(substitute(substitute(a:text, '^\s*|', '┌', ''), '|\s*$', '┐', ''), '|', '┬', 'g'), '[^┌┐┬]', '─', 'g'),
-        \ substitute(a:text, '|', '│', 'g') . 'TH'
+        \ substitute(substitute(substitute(substitute(a:text, '^\s*|', '┏', ''), '|\s*$', '┓', ''), '|', '┳', 'g'), '[^┏┓┳]', '━', 'g'),
+        \ substitute(a:text, '|', '┃', 'g') . 'TH'
       \ ]
     elseif a:text =~? '\s*|\(-\+|\)\+$'
       let l:state.table += [
-        \ substitute(substitute(substitute(substitute(a:text, '^\s*|', '├', ''), '|\s*$', '┤', ''), '|', '┼', 'g'), '-', '─', 'g')
+        \ substitute(substitute(substitute(substitute(a:text, '^\s*|', '┣', ''), '|\s*$', '┫', ''), '|', '╋', 'g'), '-', '━', 'g')
       \ ]
     else
-      let l:state.table += [substitute(a:text, '|', '│', 'g') . 'TR']
+      let l:state.table += [substitute(a:text, '|', '┃', 'g') . 'TR']
     endif
 
 
   " Code Blocks - Indent. Precede and follow with horzontal line
   elseif a:text =~? '^\s*```'
     let l:state.code = !l:state.code
-    let new_text += ['    '.repeat('━', winwidth(0)-8)]
+    let new_text += ['    '.repeat(l:state.code ? '▄' : '▀', winwidth(0)-8)]
 
   elseif l:state.code
     let new_text += ['    '.a:text]
 
 
   " Checkboxes - Replace with Unicode squares
-  elseif a:text =~? '^[*-] \[ \]'
-    let new_text += [substitute(a:text,  '^[*-] \[ \]', '□', '')]
-
-  elseif a:text =~? '^[*-] \[x\]'
-    let new_text += [substitute(a:text,  '^[*-] \[x\]', '■', '')]
+  elseif a:text =~? '^[*-] \[[x ]\]'
+    let new_text += [substitute(substitute(a:text, '^[*-] \[ \]', '□', ''), '^[*-] \[x\]', '■', '')]
 
 
   " Bullet Lists - Replace with Unicode bullet
   elseif a:text =~? '^\s*[*-]'
-    let new_text += [substitute(a:text, '^\s*\zs[*-] ', '∙ ', '')]
+    let new_text += [substitute(a:text, '^\s*\zs[*-] ', '• ', '')]
 
 
   " Numbered Lists - Renumber, with indentation
@@ -102,10 +99,10 @@ function! markdown#format(text, last_line, state)
     let l:text = substitute(a:text, '^\s*>\s*', '', '')
     while strchars(l:text) > winwidth(0) - 8
       let s = strridx(strcharpart(l:text,0,winwidth(0)-10),' ')
-      let new_text += ['  ┃ '.strcharpart(l:text,0,s)]
+      let new_text += ['  ▐ '.strcharpart(l:text,0,s)]
       let l:text = strcharpart(l:text,s+1)
     endwhile
-    let new_text += ['  ┃ '.l:text]
+    let new_text += ['  ▐ '.l:text]
 
 
   " Return text as is.
@@ -135,7 +132,7 @@ function! s:Center(text, prefix)
 endfunction
 
 function! s:FinishTable(text)
-  let l:text = extend(a:text, [ substitute( substitute( substitute(a:text[0], '┌', '└', ''), '┐', '┘', ''), '┬', '┴', 'g') ] )
+  let l:text = extend(a:text, [ substitute( substitute( substitute(a:text[0], '┏', '┗', ''), '┓', '┛', ''), '┳', '┻', 'g') ] )
   return s:Center(l:text, '')
 endfunction
 
