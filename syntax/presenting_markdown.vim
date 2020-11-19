@@ -17,10 +17,10 @@ syntax match presentingCodeDelimiter /[▄▀]/ containedin=markdownCodeBlock
 syntax match presentingBlockQuote /▐/
 
 syntax match presentingTableEdges /[┃━┏┓┗┛┳┻┣╋┫]/ containedin=markdownCodeBlock
-syntax match presentingTableHeader /^.*TH$/ contains=presentingTableEdges
-syntax match presentingTableRow /^.*TR$/ contains=presentingTableEdges
-syntax match presentingTableHeaderMarker /TH$/ containedin=presentingTableHeader conceal
-syntax match presentingTableRowMarker /TR$/ containedin=presentingTableRow conceal
+syntax match presentingTableHeaderMarker /^«th»/ conceal
+syntax match presentingTableRowMarker /^«tr»/ conceal
+syntax match presentingTableHeader /^«th».*$/ contains=presentingTableEdges,presentingTableHeaderMarker
+syntax match presentingTableRow /^«tr».*$/ contains=presentingTableEdges,presentingTableRowMarker
 
 highlight default link presentingH1 markdownH1
 highlight default link presentingH2 markdownH2

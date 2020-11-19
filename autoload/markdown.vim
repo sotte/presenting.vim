@@ -40,14 +40,14 @@ function! markdown#format(text, last_line, state)
     if l:state.table == []
       let l:state.table = [
         \ substitute(substitute(substitute(substitute(a:text, '^\s*|', '┏', ''), '|\s*$', '┓', ''), '|', '┳', 'g'), '[^┏┓┳]', '━', 'g'),
-        \ substitute(a:text, '|', '┃', 'g') . 'TH'
+        \ substitute(a:text, '|', '┃', 'g')
       \ ]
     elseif a:text =~? '\s*|\(-\+|\)\+$'
       let l:state.table += [
         \ substitute(substitute(substitute(substitute(a:text, '^\s*|', '┣', ''), '|\s*$', '┫', ''), '|', '╋', 'g'), '-', '━', 'g')
       \ ]
     else
-      let l:state.table += [substitute(a:text, '|', '┃', 'g') . 'TR']
+      let l:state.table += [substitute(a:text, '|', '┃', 'g') ]
     endif
 
 
@@ -133,7 +133,9 @@ endfunction
 
 function! s:FinishTable(text)
   let l:text = extend(a:text, [ substitute( substitute( substitute(a:text[0], '┏', '┗', ''), '┓', '┛', ''), '┳', '┻', 'g') ] )
-  return s:Center(l:text, '')
+  let l:text = s:Center(l:text, '«tr»')
+  let l:text[1] = substitute(l:text[1], '^«tr»', '«th»', '')
+  return l:text
 endfunction
 
 " vim:ts=2:sw=2:expandtab
