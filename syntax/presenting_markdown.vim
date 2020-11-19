@@ -2,11 +2,11 @@ runtime! syntax/markdown.vim
 
 setlocal conceallevel=3 concealcursor=nvic
 
-syntax match presentingHeadingDelimiter /^#[1-4]/ conceal
-syntax match presentingH1 /^#1.*/ contains=presentingHeadingDelimiter
-syntax match presentingH2 /^#2.*/ contains=presentingHeadingDelimiter
-syntax match presentingH3 /^#3.*/ contains=presentingHeadingDelimiter
-syntax match presentingH4 /^#4.*/ contains=presentingHeadingDelimiter
+syntax match presentingHeadingMarker /^«h[1-4]»/ conceal
+syntax match presentingH1 /^«h1».*/ contains=presentingHeadingMarker
+syntax match presentingH2 /^«h2».*/ contains=presentingHeadingMarker
+syntax match presentingH3 /^«h3».*/ contains=presentingHeadingMarker
+syntax match presentingH4 /^«h4».*/ contains=presentingHeadingMarker
 
 syntax match presentingOrderedListMarker /^\s*\d\+\./
 syntax match presentingListMarker /^\s*•/
