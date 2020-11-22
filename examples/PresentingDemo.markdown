@@ -70,7 +70,7 @@ Numbers are recalculated and incremented as you'd expect.
 
 ## Unordered
 
-Bullets are rendered with a Unicode bullet operator.
+Bullets are rendered with a Unicode bullet.
 
 - milk
 * bread
