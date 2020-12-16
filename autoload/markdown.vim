@@ -16,8 +16,18 @@ function! markdown#format(text, last_line, state)
   endif
 
 
+  " Code Blocks - Indent. Precede and follow with horzontal line
+  if l:state.comment == 0 && a:text =~? '^\s*```'
+    let l:state.code = !l:state.code
+    let new_text += ['    '.repeat(l:state.code ? '▄' : '▀', winwidth(0)-8)]
+
+  " Avoid formatting inside a code block by having this at the top
+  elseif l:state.code
+    let new_text += ['    '.a:text]
+
+
   " Remove commented lines.
-  if a:text =~? '<!--'
+  elseif a:text =~? '<!--'
     let uncommented = substitute(a:text, '<!--.\{-}\($\|-->\)','','')
     if uncommented != ''
       let new_text += [uncommented]
@@ -50,15 +60,6 @@ function! markdown#format(text, last_line, state)
     else
       let l:state.table += [substitute(a:text, '|', '┃', 'g') ]
     endif
-
-
-  " Code Blocks - Indent. Precede and follow with horzontal line
-  elseif a:text =~? '^\s*```'
-    let l:state.code = !l:state.code
-    let new_text += ['    '.repeat(l:state.code ? '▄' : '▀', winwidth(0)-8)]
-
-  elseif l:state.code
-    let new_text += ['    '.a:text]
 
 
   " Checkboxes - Replace with Unicode squares
