@@ -24,7 +24,8 @@ function! markdown#format(text, last_line, state)
     endif
     let l:state.comment = a:text !~? '-->'
 
-  elseif a:text =~? '-->'
+  " Do not remove --> outside of a comment
+  elseif l:state.comment != 0 && a:text =~? '-->'
     let uncommented = substitute(a:text, '.*-->','','')
     if uncommented != ''
       let new_text += [uncommented]
