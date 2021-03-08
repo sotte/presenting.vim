@@ -17,9 +17,17 @@ function! markdown#format(text, last_line, state)
 
 
   " Code Blocks - Indent. Precede and follow with horzontal line
-  if l:state.comment == 0 && a:text =~? '^\s*```'
-    let l:state.code = !l:state.code
-    let new_text += ['    '.repeat(l:state.code ? '▄' : '▀', winwidth(0)-8)]
+  " Keep the ``` lines if a language is specified for highlighting.
+  if !l:state.comment && a:text =~? '^\s*```'
+    if !l:state.code
+      let l:state.code = a:text =~? '```\s*\w' ? 1 : 2
+      let new_text += ['    '.repeat('▄', &columns-8)]
+      let new_text += l:state.code == 1 ? [substitute(a:text, '^\s*', '    ', '')] : ['']
+    else
+      let new_text += l:state.code == 1 ? [substitute(a:text, '^\s*', '    ', '')] : ['']
+      let new_text += ['    '.repeat('▀', &columns-8)]
+      let l:state.code = 0
+    endif
 
   " Avoid formatting inside a code block by having this at the top
   elseif l:state.code
