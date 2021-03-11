@@ -109,11 +109,7 @@ endfunction
 ```vim
 " Calculate n! (with syntax highlighting)
 function Factorial(n)
-    if n <= 0
-        return 1
-    else
-        return n * Factorial(n-1)
-    endif
+   return a:n<=0 ? 1 : a:n * Factorial(a:n-1)
 endfunction
 ```
 
