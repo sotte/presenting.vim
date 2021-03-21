@@ -20,7 +20,7 @@
   [1]: http://www.figlet.org/
 
 Start presenting:
-```
+```vim
 :PresentingStart
 ```
 
@@ -47,14 +47,14 @@ To format tables, they must be manually spaced, and include vertical bars, not o
 
 # Lists
 
-Lists can be numbered, bulleted, or To Do list items. As a reminder, here is the markup for each type of list.
+Lists can be ordered, unordered, or To Do list items. As a reminder, here is the markup for each type of list.
 
 ```
-* bulleted item
-- bulleted item
-
 1. numbered item
     1. numbered sub-item
+
+* bulleted item
+- bulleted item
 
 - [ ] unchecked item
 - [x] checked item
@@ -94,6 +94,24 @@ Paragraphs and quotes are word wrapped on word boundaries. Quotes are indented a
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ullamcorper dignissim cras tincidunt lobortis. Nam aliquam sem et tortor consequat id porta nibh. Venenatis a condimentum vitae sapien pellentesque habitant morbi tristique. Mi ipsum faucibus vitae aliquet nec ullamcorper. Viverra mauris in aliquam sem fringilla. Pharetra sit amet aliquam id diam maecenas ultricies mi.
 
 > Vitae proin sagittis nisl rhoncus mattis rhoncus. Mauris rhoncus aenean vel elit scelerisque. Eu volutpat odio facilisis mauris sit. Commodo quis imperdiet massa tincidunt nunc pulvinar sapien et.  Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+
+# Code Blocks
+
+Code blocks can be syntax highlighted, but not `in-line code`.
+
+```
+" Hello World (without syntax highlighting)
+function HelloWorld()
+    echomsg "Hello World!"
+endfunction
+```
+
+```vim
+" Calculate n! (with syntax highlighting)
+function Factorial(n)
+   return a:n<=0 ? 1 : a:n * Factorial(a:n-1)
+endfunction
+```
 
 # The End
 

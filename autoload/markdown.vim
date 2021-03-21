@@ -17,9 +17,17 @@ function! markdown#format(text, last_line, state)
 
 
   " Code Blocks - Indent. Precede and follow with horzontal line
-  if l:state.comment == 0 && a:text =~? '^\s*```'
-    let l:state.code = !l:state.code
-    let new_text += ['    '.repeat(l:state.code ? '▄' : '▀', winwidth(0)-8)]
+  " Keep the ``` lines if a language is specified for highlighting.
+  if !l:state.comment && a:text =~? '^\s*```'
+    if !l:state.code
+      let l:state.code = a:text =~? '```\s*\w' ? 1 : 2
+      let new_text += ['    '.repeat('▄', &columns-8)]
+      let new_text += l:state.code == 1 ? [substitute(a:text, '^\s*', '    ', '')] : ['']
+    else
+      let new_text += l:state.code == 1 ? [substitute(a:text, '^\s*', '    ', '')] : ['']
+      let new_text += ['    '.repeat('▀', &columns-8)]
+      let l:state.code = 0
+    endif
 
   " Avoid formatting inside a code block by having this at the top
   elseif l:state.code
@@ -35,7 +43,7 @@ function! markdown#format(text, last_line, state)
     let l:state.comment = a:text !~? '-->'
 
   " Do not remove --> outside of a comment
-  elseif l:state.comment != 0 && a:text =~? '-->'
+  elseif l:state.comment && a:text =~? '-->'
     let uncommented = substitute(a:text, '.*-->','','')
     if uncommented != ''
       let new_text += [uncommented]
@@ -88,7 +96,7 @@ function! markdown#format(text, last_line, state)
   elseif a:text =~? '^#\{1,3}[^#]' && g:presenting_figlets && executable('figlet')
     let level = strchars(matchstr(a:text, '^#\+'))
     let font = level == 1 ? g:presenting_font_large : g:presenting_font_small
-    let figlet = split(system('figlet -w '.winwidth(0).' -f '.font.' '.shellescape(substitute(a:text,'^#\+s*','',''))), "\n")
+    let figlet = split(system('figlet -w '.&columns.' -f '.font.' '.shellescape(substitute(a:text,'^#\+s*','',''))), "\n")
     let new_text += s:Center(figlet, '«h'.level.'»')
 
   " Headings - Centered Normal Text for ####
@@ -99,8 +107,8 @@ function! markdown#format(text, last_line, state)
   " Quote Blocks - Wrap and Left Border
   elseif a:text =~? '^\s*>'
     let l:text = substitute(a:text, '^\s*>\s*', '', '')
-    while strchars(l:text) > winwidth(0) - 8
-      let s = strridx(strcharpart(l:text,0,winwidth(0)-10),' ')
+    while strchars(l:text) > &columns - 8
+      let s = strridx(strcharpart(l:text,0,&columns-10),' ')
       let new_text += ['  ▐ '.strcharpart(l:text,0,s)]
       let l:text = strcharpart(l:text,s+1)
     endwhile
@@ -129,7 +137,7 @@ endfunction
 
 function! s:Center(text, prefix)
   let max_width = max(map(copy(a:text), 'strchars(v:val)'))
-  let centered = map(copy(a:text), 'a:prefix.repeat(" ",(winwidth(0)-max_width)/2).v:val')
+  let centered = map(copy(a:text), 'a:prefix.repeat(" ",(&columns-max_width)/2).v:val')
   return centered
 endfunction
 
