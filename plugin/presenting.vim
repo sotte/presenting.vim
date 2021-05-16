@@ -62,6 +62,7 @@ function! s:Start()
   setlocal breakindent
   setlocal nolist
   setlocal signcolumn=no
+  setlocal colorcolumn=
 
   if globpath(&rtp, 'syntax/presenting_'.l:filetype.'.vim') == ''
     let &filetype=l:filetype
