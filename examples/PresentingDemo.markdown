@@ -57,7 +57,10 @@ Lists can be ordered, unordered, or To Do list items. As a reminder, here is the
 - bulleted item
 
 - [ ] unchecked item
+  - [ ] unchecked sub-item
 - [x] checked item
+  - [x] checked sub-item
+- [X] checked item
 ```
 ## Ordered
 
@@ -83,7 +86,11 @@ Bullets are rendered with a Unicode bullet.
 Checkboxes are rendered with Unicode as either empty or filled squares.
 
 - [ ] Not done yet
+  - [ ] Task 1
+  - [ ] Task 2
 - [x] Done
+  - [x] Task 1
+  - [X] Task 2
 
 These are part of Github-flavored Markdown, not the official Markdown specification.
 

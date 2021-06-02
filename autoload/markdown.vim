@@ -71,8 +71,10 @@ function! markdown#format(text, last_line, state)
 
 
   " Checkboxes - Replace with Unicode squares
-  elseif a:text =~? '^\s*[*-] \[[x\s]\]'
-    let new_text += [substitute(substitute(a:text, '^[*-] \[\s\]', '□', ''), '^[*-] \[x\]', '■', '')]
+  elseif a:text =~? '^\s*[*-] \[[ xX]\]'
+    let tmp = substitute(a:text, '[*-] \[ \]',    '□', '')
+    let tmp = substitute(tmp,    '[*-] \[[xX]\]', '■', '')
+    let new_text += [tmp]
 
 
   " Bullet Lists - Replace with Unicode bullet
