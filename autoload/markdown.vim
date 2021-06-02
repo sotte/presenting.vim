@@ -95,7 +95,7 @@ function! markdown#format(text, last_line, state)
   " Headings
   elseif a:text =~? '^#\{1,4}[^#]'
     let level = strchars(matchstr(a:text, '^#\+'))
-    if level < 4 && g:presenting_figlets && executable('figlet')
+    if level < 4 && g:presenting_figlets && g:presenting_figlets_executable
       " Headings - Centered for figlet and #, ##, ###
       let font = level == 1 ? g:presenting_font_large : g:presenting_font_small
       let figlet = split(system('figlet -w '.&columns.' -f '.font.' '.shellescape(substitute(a:text,'^#\+s*','',''))), "\n")
