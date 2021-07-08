@@ -94,16 +94,18 @@ function! markdown#format(text, last_line, state)
     let new_text += [substitute(a:text, '^\s*\zs\d\+', l:state.bullet_nums[-1], '')]
 
 
-  " Headings - Centered Figlets for #, ##, and ###
-  elseif a:text =~? '^#\{1,3}[^#]' && g:presenting_figlets && executable('figlet')
+  " Headings
+  elseif a:text =~? '^#\{1,4}[^#]'
     let level = strchars(matchstr(a:text, '^#\+'))
-    let font = level == 1 ? g:presenting_font_large : g:presenting_font_small
-    let figlet = split(system('figlet -w '.&columns.' -f '.font.' '.shellescape(substitute(a:text,'^#\+s*','',''))), "\n")
-    let new_text += s:Center(figlet, '«h'.level.'»')
-
-  " Headings - Centered Normal Text for ####
-  elseif a:text =~? '^####[^#]'
-    let new_text += s:Center([substitute(a:text,'^####\s*','','')], '«h4»')
+    if level < 4 && g:presenting_figlets && g:presenting_figlets_executable
+      " Headings - Centered for figlet and #, ##, ###
+      let font = level == 1 ? g:presenting_font_large : g:presenting_font_small
+      let figlet = split(system('figlet -w '.&columns.' -f '.font.' '.shellescape(substitute(a:text,'^#\+s*','',''))), "\n")
+      let new_text += s:Center(figlet, '«h'.level.'»')
+    else
+      " Headings - Centered for the rest
+      let new_text += s:Center([substitute(a:text,'^'.repeat('#', level).'\s*','','')], '«h4»')
+    endif
 
 
   " Quote Blocks - Wrap and Left Border

@@ -133,8 +133,9 @@ function! s:Parse()
 endfunction
 
 function! s:Format(pages, filetype)
-  let state = {}
+  let g:presenting_figlets_executable = executable('figlet')
 
+  let state = {}
   try
     for i in range(0,len(a:pages)-1)
       let replacement_page = []
