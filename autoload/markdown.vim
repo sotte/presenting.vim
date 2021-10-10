@@ -29,21 +29,6 @@ function! markdown#format(text, last_line, state)
       let l:state.code = 0
     endif
 
-  " Image - Centered image2ascii for markdown image: ![alt_text](img_url =size)
-  elseif a:text =~? '\.*\!\[.*\]\(.*\)' && g:presenting_image2ascii && executable('image2ascii')
-    let alt_text = matchstr(a:text, '\.*\!\[\zs[^]]\+\ze')
-    let img_url = matchstr(a:text, '\.*\!\[.*\](\zs[^ )]\+\ze')
-    let size = split(matchstr(a:text, '\.*\!\[.*\](.*=\zs[^)]\+\ze'), 'x')
-
-    let output = system('image2ascii -f ' .. img_url .. ' -w ' .. get(size, 0,'80') .. ' -g ' .. get(size, 1, '40') .. ' -c=false')
-
-    if output =~? '\.*open image failed\.*'
-      " Show alt text if image url dose not exists
-      let new_text += s:Center([alt_text], '«img»')
-    else
-      let new_text += s:Center(split(output,"\n"), '«img»')
-    endif
-
   " Avoid formatting inside a code block by having this at the top
   elseif l:state.code
     let new_text += ['    '.a:text]
@@ -131,6 +116,20 @@ function! markdown#format(text, last_line, state)
     endwhile
     let new_text += ['  ▐ '.l:text]
 
+  " Image - Centered image2ascii for markdown image: ![alt_text](img_url =size)
+  elseif a:text =~? '\.*\!\[.*\]\(.*\)' && g:presenting_image2ascii && executable('image2ascii')
+    let alt_text = matchstr(a:text, '\.*\!\[\zs[^]]\+\ze')
+    let img_url = matchstr(a:text, '\.*\!\[.*\](\zs[^ )]\+\ze')
+    let size = split(matchstr(a:text, '\.*\!\[.*\](.*=\zs[^)]\+\ze'), 'x')
+
+    let output = system('image2ascii -f ' .. img_url .. ' -w ' .. get(size, 0,'80') .. ' -g ' .. get(size, 1, '40') .. ' -c=false')
+
+    if output =~? '\.*open image failed\.*'
+      " Show alt text if image url dose not exists
+      let new_text += s:Center([alt_text], '«img»')
+    else
+      let new_text += s:Center(split(output,"\n"), '«img»')
+    endif
 
   " Return text as is.
   else

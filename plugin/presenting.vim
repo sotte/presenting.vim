@@ -7,9 +7,10 @@ let g:presenting_prev = get(g:, 'presenting_prev', 'p')
 let g:presenting_quit = get(g:, 'presenting_quit', 'q')
 
 let g:presenting_figlets = get(g:, 'presenting_figlets', 1)
-let g:presenting_image2ascii = get(g:, 'presenting_image2ascii', 1)
 let g:presenting_font_large = get(g:, 'presenting_font_large', 'standard')
 let g:presenting_font_small = get(g:, 'presenting_font_small', 'small')
+
+let g:presenting_image2ascii = get(g:, 'presenting_image2ascii', 1)
 
 let s:presenting_id = 0
 
