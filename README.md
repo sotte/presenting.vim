@@ -24,6 +24,10 @@ Markdown files are rendered a bit more fancifully. Be sure to read the help file
 
 ![presenting.vim Markdown demo](examples/FancyMarkdown.gif)
 
+Markdown image links where handled by converting them into ascii.
+
+![image2ascii markdown example](examples/image2ascii_demo.png)
+
 ## Installation
 
 Use [pathogen][3] or [vundle][4] to install presenting.vim.
