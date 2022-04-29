@@ -163,9 +163,10 @@ image2ascii. This is on by default, and can be turned off by setting >
   :let g:presenting_image2ascii = 0
 >
 
-You can append `=WIDTHxHEIGHT` after the URL of the graphic file to resize the
-image. Do not forget the space before the `=`: >
-  ![alt text](./image.png =55x35)
+You can append size paremeters (ratio or width and height) in http query
+paremeters style after the URL of the graphic file to resize it. : >
+  ![alt text](./image.png?r=0.4)
+  ![alt text](./image.png?w=55&h=35)
 >
 
 More information about image2ascii can be found at
