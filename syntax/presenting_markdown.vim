@@ -12,6 +12,10 @@ highlight default link presentingH2 markdownH2
 highlight default link presentingH3 markdownH3
 highlight default link presentingH4 markdownH4
 
+syntax match presentingImageMarker /^«img»/ conceal
+syntax match presentingImage /^«img».*/ contains=presentingImageMarker
+highlight default link presentingImage Normal
+
 syntax match presentingOrderedListMarker /^\s*\d\+\./
 syntax match presentingListMarker /^\s*•/
 syntax match presentingCheckboxMarker /^\s*[■□]/

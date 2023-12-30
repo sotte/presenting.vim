@@ -120,6 +120,19 @@ function Factorial(n)
 endfunction
 ```
 
+# Images
+
+If [image2ascii](https://github.com/qeesung/image2ascii) is installed and enabled markdown image links are converted to ascii and displayed in the presentation buffer.
+You can append `?r=ratio` or `?w=WIDTH&h=HEIGHT` after the URL of the graphic file to resize the image.
+
+```bash
+![vim logo](./1200px-Vimlogo.png?r=0.05)
+```
+
+Results into:
+
+![vim logo](./1200px-Vimlogo.png?r=0.05)
+
 # The End
 
 

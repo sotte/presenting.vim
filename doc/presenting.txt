@@ -153,7 +153,24 @@ These fonts can be changed with the the following variables: >
 More information about figlets can be found at https://figlet.org and the
 interactive website http://patorjk.com/software/taag can be used to test out
 the different fonts.
+------------------------------------------------------------------------------
+                                                         *presenting_image2ascii*
 
+Note: Currently, this applies only to Markdown files.
+
+Markdown image embeddings can also been rendered into ascii by a tool called
+image2ascii. This is on by default, and can be turned off by setting >
+  :let g:presenting_image2ascii = 0
+>
+
+You can append size paremeters (ratio or width and height) in http query
+paremeters style after the URL of the graphic file to resize it. : >
+  ![alt text](./image.png?r=0.4)
+  ![alt text](./image.png?w=55&h=35)
+>
+
+More information about image2ascii can be found at
+https://github.com/qeesung/image2ascii
 ==============================================================================
 ISSUES                                                       *presenting-issues*
 

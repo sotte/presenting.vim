@@ -116,6 +116,28 @@ function! markdown#format(text, last_line, state)
     endwhile
     let new_text += ['  ▐ '.l:text]
 
+  " Image - Centered image2ascii for markdown image: ![alt_text](img_url?r=radius&w=width&h=height)
+  elseif a:text =~? '\.*\!\[.*\]\(.*\)' && g:presenting_image2ascii && executable('image2ascii')
+    let alt_text = matchstr(a:text, '\.*\!\[\zs[^]]\+\ze')
+    let img_url = matchstr(a:text, '\.*\!\[.*\](\zs[^ ?)]\+\ze')
+    let size_query_string = matchstr(a:text, '\.*\!\[.*\](.*?\zs[^)]\+\ze')
+    let r = matchstr(size_query_string, '\.*r=\zs[0-9]*[.]\?[0-9]*\ze')
+    let w = matchstr(size_query_string, '\.*w=\zs[0-9]*\ze')
+    let h = matchstr(size_query_string, '\.*h=\zs[0-9]*\ze')
+    let size_params = ' -w 40 -g 40'
+    if r != ""
+      let size_params = ' -r ' .. r
+    elseif w != "" && h != ""
+      let size_params = ' -w ' .. w .. ' -g ' .. h
+    endif
+    let output = system('image2ascii -f ' .. img_url .. size_params .. ' -c=false')
+
+    if output =~? '\.*open image failed\.*'
+      " Show alt text if image url dose not exists
+      let new_text += s:Center([alt_text], '«img»')
+    else
+      let new_text += s:Center(split(output,"\n"), '«img»')
+    endif
 
   " Return text as is.
   else
