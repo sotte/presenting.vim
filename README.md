@@ -1,5 +1,9 @@
 # presenting.vim
 
+> This repo is archived.
+> Use [presenting.nvim](https://github.com/sotte/presenting.nvim) instead.
+
+
 **presenting.vim** is a vim plugin that turns your markup into presentable
 slides (in vim).
 
